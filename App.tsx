@@ -1,25 +1,41 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from '@react-navigation/native'
 import * as React from 'react'
-import { EnqueteScreen } from './src/Screens/Enquete'
-import { HomeScreen } from './src/Screens/Home'
+import { useContext } from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
+import {
+  Overlock_400Regular,
+  Overlock_400Regular_Italic,
+  Overlock_700Bold,
+  Overlock_700Bold_Italic,
+  Overlock_900Black,
+  Overlock_900Black_Italic, useFonts
+} from '@expo-google-fonts/overlock'
 
-import IconEnquete from './assets/enquete.svg'
-import IconHome from './assets/home.svg'
-import IconIdioma from './assets/Idioma.svg'
-import { ModalIdiomaScreen } from './src/Screens/ModalIdioma'
+import LanguageContextProvider, { LanguageContext } from './src/Contexts/LanguageProvider'
+import { Routes } from './src/Routes'
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+
+  const { texts } = useContext(LanguageContext)
+
+  let [fontsLoaded] = useFonts({
+    Overlock_400Regular,
+    Overlock_400Regular_Italic,
+    Overlock_700Bold,
+    Overlock_700Bold_Italic,
+    Overlock_900Black,
+    Overlock_900Black_Italic,
+  });
+
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'rgba(0, 0, 0, 0.8)' }}>
-        <Tab.Screen name="ENQUETE" component={EnqueteScreen} options={{ tabBarIcon: ({ focused }) => <IconEnquete width={focused ? 35 : 30} height={focused ? 35 : 30} /> }} />
-        <Tab.Screen name="HOME" component={HomeScreen} options={{ tabBarIcon: ({ focused }) => <IconHome width={focused ? 35 : 30} height={focused ? 35 : 30} /> }} />
-        <Tab.Screen name="IDIOMA" component={ModalIdiomaScreen} options={{ tabBarIcon: ({ focused }) => <IconIdioma width={focused ? 35 : 30} height={focused ? 35 : 30} /> }} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={{ flex: 1 }}>
+      <LanguageContextProvider>
+        <Routes />
+      </LanguageContextProvider>
+    </SafeAreaView>
+
   );
 }
