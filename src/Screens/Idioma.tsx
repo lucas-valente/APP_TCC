@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconArrowBack from '../assets/img/arrowBack.svg';
 
 import BrasilIcon from '../assets/img/IconBrasil.png';
 import UsaIcon from '../assets/img/IconUsa.png';
@@ -35,11 +35,14 @@ export function ModalIdiomaScreen() {
                         style={styles.touchableOpacityStyle}
                         onPress={openScreen}
                     >
-                        <Icon
-                            name="arrow-back"
-                            size={25}
-                            color='white'
-                        />
+                        <View>
+                            <IconArrowBack
+                                width={25}
+                                height={25}
+                                color='white'
+                            />
+                        </View>
+
                     </TouchableOpacity>
 
                 </View>

@@ -3,6 +3,16 @@ import * as React from 'react'
 import { useContext } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { decode, encode } from 'base-64'
+
+if (!global.btoa) {
+  global.btoa = encode;
+}
+
+if (!global.atob) {
+  global.atob = decode;
+}
+
 import {
   Overlock_400Regular,
   Overlock_400Regular_Italic,
