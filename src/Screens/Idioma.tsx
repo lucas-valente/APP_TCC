@@ -74,6 +74,7 @@ export function ModalIdiomaScreen() {
                         </TouchableOpacity>
 
                     </View>
+                    <Text style={styles.TextDesc}>{language}</Text>
 
                 </View>
 

@@ -5,7 +5,9 @@ import { TabRoute } from './tabs';
 export function Routes() {
     return (
         <NavigationContainer>
+            {/* <LanguageContextProvider> */}
             <TabRoute />
+            {/* </LanguageContextProvider> */}
         </NavigationContainer>
     );
 }

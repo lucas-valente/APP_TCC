@@ -23,6 +23,32 @@ type texts = {
     }
   }
 }
+
+const initialValue = {
+  texts: {
+    home: {
+      header: 'Casa'
+    },
+    enquete: {
+      header: 'Enquete'
+    },
+    posts: {
+      header: 'Posts'
+    },
+    tabBarLabel: {
+      home: {
+        header: 'HOME'
+      },
+      enquete: {
+        header: 'ENQUETE'
+      },
+      idioma: {
+        header: 'IDIOMA'
+      },
+    }
+  }
+}
+
 export const LanguageContext = createContext({
   language: "portuguese",
   texts: {
@@ -58,7 +84,7 @@ type props = {
 const LanguageContextProvider = ({ children }: props) => {
 
   const [language, setLanguage] = useState("portuguese");
-  const [texts, setTexts] = useState<texts | any>(null);
+  const [texts, setTexts] = useState<texts | any>(initialValue);
 
   const toggleLanguageP = () => {
 
