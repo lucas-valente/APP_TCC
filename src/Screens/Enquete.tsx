@@ -18,7 +18,7 @@ const api = axios.create({
 const username = 'lucas.valente'
 const password = 'YTuNWNSN4GQ2xdp'
 
-function useApi() {
+export function useApi() {
     return ({
 
         GetSurvey: async () => {

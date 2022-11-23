@@ -1,35 +1,24 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import * as React from 'react';
-import { useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { LanguageContext } from '../Contexts/LanguageProvider';
+import { StyleSheet } from 'react-native';
+import { CardPosts } from '../Components/CardPosts';
 
 export function HomeScreen() {
 
-    const { texts } = useContext(LanguageContext)
-
     return (
-        <View style={styles.container}>
-            <LinearGradient
-                colors={['#44DD9D', '#142F47']}
-                style={styles.linearGradient}
-            >
-                <Text>{texts.home.header}</Text>
-            </LinearGradient>
-        </View>
+        <LinearGradient
+            colors={['#44DD9D', '#142F47']}
+            style={styles.linearGradient}
+        >
+            <CardPosts />
+        </LinearGradient>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     linearGradient: {
-        alignItems: 'center',
-        justifyContent: 'center',
         flex: 1,
+        alignItems: 'center',
         width: '100%'
     },
 })
