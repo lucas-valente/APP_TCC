@@ -2,13 +2,14 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { Alert, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
+import { TPost } from '../CardPosts';
 
 type props = {
     setModalVisible: Function
     modalVisible: boolean
-    title: string
+    post: TPost | undefined
 }
-export function ModalPosts({ setModalVisible, modalVisible, title }: props) {
+export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
 
     const { texts } = useContext(LanguageContext)
 
@@ -26,7 +27,11 @@ export function ModalPosts({ setModalVisible, modalVisible, title }: props) {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>{title}</Text>
+
+                        <Text style={styles.modalText}>{post?.post_titulo}</Text>
+
+                        <Text style={styles.modalText}>{post?.post_conteudo}</Text>
+
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}
@@ -57,8 +62,7 @@ const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
-        // marginTop: 22
+        alignItems: "center"
     },
     modalView: {
         flex: 1,

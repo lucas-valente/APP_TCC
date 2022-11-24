@@ -24,11 +24,11 @@ export function TabRoute() {
 
 
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'rgba(0, 0, 0, 0.6)', tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' }, tabBarStyle: { backgroundColor: '#f1f1f1' }, }}>
-
-            <Tab.Screen name='ENQUETE' component={EnqueteScreen} options={{ tabBarIcon: ({ focused }) => <IconEnquete color='#104949' opacity={focused ? 1 : 0.7} width={focused ? 30 : 20} height={focused ? 30 : 30} />, tabBarLabel: texts?.tabBarLabel?.enquete?.header || 'ENQUETE' }} />
+        <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'rgba(0, 0, 0, 0.6)', tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' }, tabBarStyle: { backgroundColor: '#f1f1f1' } }}>
 
             <Tab.Screen name="HOME" component={HomeScreen} options={{ tabBarIcon: ({ focused }) => <IconHome opacity={focused ? 1 : 0.7} width={focused ? 35 : 30} height={focused ? 35 : 30} />, tabBarLabel: texts?.tabBarLabel?.home?.header || 'HOME' }} />
+
+            <Tab.Screen name='ENQUETE' component={EnqueteScreen} options={{ tabBarIcon: ({ focused }) => <IconEnquete color='#104949' opacity={focused ? 1 : 0.7} width={focused ? 30 : 20} height={focused ? 30 : 30} />, tabBarLabel: texts?.tabBarLabel?.enquete?.header || 'ENQUETE' }} />
 
             <Tab.Screen name="IDIOMA" component={ModalIdiomaScreen} options={{ tabBarIcon: ({ focused }) => <IconIdioma opacity={focused ? 1 : 0.7} width={focused ? 30 : 25} height={focused ? 30 : 25} />, tabBarStyle: { display: 'none' }, tabBarLabel: texts?.tabBarLabel?.idioma?.header || 'IDIOMA' }} />
 
