@@ -2,7 +2,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { CardPosts } from '../Components/CardPosts';
-
 export function HomeScreen() {
 
     return (
@@ -19,6 +18,7 @@ const styles = StyleSheet.create({
     linearGradient: {
         flex: 1,
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
+        height: '100%'
     },
 })

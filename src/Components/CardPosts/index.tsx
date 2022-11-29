@@ -1,42 +1,19 @@
 import axios from 'axios';
+import LottieView from 'lottie-react-native';
 import * as React from 'react';
 import { useContext, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import loading from '../../assets/img/loading2.json';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
 import { ModalPosts } from '../ModalPosts';
-
-const items: TPost[] = [
-    {
-        "id": 1,
-        "post_titulo": "Post 1",
-        "post_descricao": "Descrição 1",
-        "post_conteudo": "conteudo 1",
-        "user": 1,
-        "idioma": 1
-    },
-    {
-        "id": 2,
-        "post_titulo": "Post 2",
-        "post_descricao": "Descrição 2",
-        "post_conteudo": "conteudo 2",
-        "user": 1,
-        "idioma": 1
-    },
-    {
-        "id": 3,
-        "post_titulo": "Post 3",
-        "post_descricao": "Descrição 3",
-        "post_conteudo": "conteudo 3",
-        "user": 1,
-        "idioma": 1
-    }
-]
 
 export type TPost = {
     id: number
     post_titulo: string
     post_descricao: string
     post_conteudo: string
+    imagem: string
     user: number
     idioma: number
 }
@@ -45,13 +22,15 @@ type props = {
     item: TPost
 }
 
-const api = axios.create({
-    baseURL: 'https://restapitcc.herokuapp.com/api/v1/'
-})
-const username = 'lucas.valente'
-const password = 'YTuNWNSN4GQ2xdp'
-
 export function useApi() {
+
+    const api = axios.create({
+        baseURL: 'https://restapitcc.herokuapp.com/api/v1/'
+    })
+
+    const username = 'lucas.valente'
+    const password = 'YTuNWNSN4GQ2xdp'
+
     return ({
 
         GetPosts: async () => {
@@ -73,12 +52,15 @@ export function CardPosts() {
 
     const [posts, setPosts] = useState<TPost[]>([]);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     React.useEffect(() => {
         async function fetch() {
             try {
 
                 const getPosts = await api.GetPosts()
                 setPosts(getPosts)
+                setIsLoading(false)
 
             } catch (error) {
                 console.warn(error)
@@ -102,17 +84,24 @@ export function CardPosts() {
         return (
             <View style={styles.containerPost}>
 
-                <Text style={styles.titlePost}>{item.post_titulo}</Text>
+                <ImageBackground source={{ uri: item.imagem }} style={{ width: '100%', flex: 1, borderRadius: 12 }} resizeMode="stretch">
+                    <View style={styles.containerPostInterno}>
 
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={styles.button}
-                    onPress={() => handleModal(item)}
-                >
-                    <Text style={styles.buttonText}>SAIBA MAIS</Text>
+                        <Text style={styles.titlePost}>{item.post_titulo}</Text>
 
-                    <ModalPosts setModalVisible={setModalVisible} modalVisible={modalVisible} post={post} />
-                </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            style={styles.button}
+                            onPress={() => handleModal(item)}
+                        >
+                            <Text style={styles.buttonText}>SAIBA MAIS</Text>
+
+                        </TouchableOpacity>
+
+                    </View>
+                </ImageBackground>
+
+                <ModalPosts setModalVisible={setModalVisible} modalVisible={modalVisible} post={post} />
 
             </View>
         )
@@ -122,32 +111,59 @@ export function CardPosts() {
     return (
         <View style={styles.container}>
 
-            <FlatList<TPost>
-                style={{ width: '100%', marginTop: 20 }}
-                data={posts}
-                keyExtractor={({ id: key }) => key.toString()}
-                renderItem={_renderItem}
-            />
+            {
+                isLoading ?
 
-        </View>
+                    <LottieView
+                        source={loading}
+                        autoPlay={true}
+                        loop={true}
+                        style={{ flex: 1, position: 'absolute', top: 0, justifyContent: 'center', alignItems: 'center', width: 500 }}
+                        autoSize={true}
+                        resizeMode='cover'
+                    /> :
+                    posts.length == 0 ?
+                        <Text style={{ color: 'white', justifyContent: 'center', alignItems: 'center', marginTop: '80%' }} >
+                            Nenhum Post escontrado
+                        </Text>
+                        :
+                        <FlatList<TPost>
+                            style={{ width: '100%', paddingTop: 20 }}
+                            data={posts}
+                            keyExtractor={({ id: key }) => key.toString()}
+                            renderItem={_renderItem}
+                        />
+            }
+        </View >
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+        position: 'relative',
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
     },
     containerPost: {
-        backgroundColor: '#363535',
+        position: 'relative',
         width: '96%',
         height: 345,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 8,
+        marginBottom: 24,
         borderRadius: 10,
-        marginBottom: 24
+        overflow: 'hidden'
+    },
+    containerPostInterno: {
+        position: 'relative',
+        width: '96%',
+        height: 345,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 8,
+        marginBottom: 24,
     },
     button: {
         backgroundColor: 'white',
@@ -164,40 +180,5 @@ const styles = StyleSheet.create({
     titlePost: {
         fontSize: 48,
         color: 'white'
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        // marginTop: 22
-    },
-    modalView: {
-        flex: 1,
-        width: '100%',
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center"
-    },
-    buttonClose: {
-        backgroundColor: "#2196F3",
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
     },
 })

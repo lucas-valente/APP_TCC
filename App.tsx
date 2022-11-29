@@ -1,9 +1,10 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import * as React from 'react'
-import { useContext } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { decode, encode } from 'base-64';
+import * as React from 'react';
+import { useContext } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { decode, encode } from 'base-64'
+import { NativeBaseProvider } from 'native-base';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -20,10 +21,10 @@ import {
   Overlock_700Bold_Italic,
   Overlock_900Black,
   Overlock_900Black_Italic, useFonts
-} from '@expo-google-fonts/overlock'
+} from '@expo-google-fonts/overlock';
 
-import LanguageContextProvider, { LanguageContext } from './src/Contexts/LanguageProvider'
-import { Routes } from './src/Routes'
+import LanguageContextProvider, { LanguageContext } from './src/Contexts/LanguageProvider';
+import { Routes } from './src/Routes';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,9 +43,11 @@ export default function App() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <LanguageContextProvider>
-        <Routes />
-      </LanguageContextProvider>
+      <NativeBaseProvider>
+        <LanguageContextProvider>
+          <Routes />
+        </LanguageContextProvider>
+      </NativeBaseProvider>
     </SafeAreaView>
 
   );

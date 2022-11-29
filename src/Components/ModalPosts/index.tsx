@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Alert, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
 import { TPost } from '../CardPosts';
 
@@ -14,14 +14,13 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
     const { texts } = useContext(LanguageContext)
 
     return (
-        <View >
+        <>
 
             <Modal
                 animationType="fade"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
                     setModalVisible(!modalVisible);
                 }}
             >
@@ -41,7 +40,8 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
                     </View>
                 </View>
             </Modal>
-        </View>
+
+        </>
     )
 }
 
@@ -55,9 +55,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 40,
         marginTop: 96,
-    },
-    buttonText: {
-        fontSize: 24
     },
     centeredView: {
         flex: 1,

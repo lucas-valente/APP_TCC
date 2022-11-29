@@ -48,7 +48,7 @@ export function ModalIdiomaScreen() {
                 </View>
 
                 <View style={styles.content}>
-                    <Logo width={130} height={130} />
+                    <Logo width={150} height={150} />
                     <Text style={styles.textHeader}>Migrantes Curitiba</Text>
                     <Text style={styles.TextDesc}>Select your language</Text>
                     <Text style={styles.TextDesc}>Selecione seu idioma</Text>
