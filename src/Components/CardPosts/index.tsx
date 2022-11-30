@@ -50,16 +50,33 @@ export function CardPosts() {
 
     const api = useApi()
 
+    const { language } = useContext(LanguageContext)
+
     const [posts, setPosts] = useState<TPost[]>([]);
 
     const [isLoading, setIsLoading] = useState(true);
 
+    const [idiomaFilter, setidiomaFilter] = useState<number | null>(null);
+
+
+
     React.useEffect(() => {
+
+        switch (language) {
+            case 'english':
+                setidiomaFilter(2)
+                break;
+
+            case 'portuguese':
+                setidiomaFilter(3)
+                break;
+        }
+
         async function fetch() {
             try {
 
-                const getPosts = await api.GetPosts()
-                setPosts(getPosts)
+                const getPosts: TPost[] = await api.GetPosts()
+                setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 2 : post.idioma == idiomaFilter)))
                 setIsLoading(false)
 
             } catch (error) {
@@ -67,9 +84,8 @@ export function CardPosts() {
             }
         }
         fetch()
-    }, [])
+    }, [language])
 
-    const { texts } = useContext(LanguageContext)
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -88,13 +104,14 @@ export function CardPosts() {
                     <View style={styles.containerPostInterno}>
 
                         <Text style={styles.titlePost}>{item.post_titulo}</Text>
+                        <Text style={styles.subTitlePost}>{item.post_descricao}</Text>
 
                         <TouchableOpacity
                             activeOpacity={0.7}
                             style={styles.button}
                             onPress={() => handleModal(item)}
                         >
-                            <Text style={styles.buttonText}>SAIBA MAIS</Text>
+                            <Text style={styles.buttonText}>{language == 'english' ? 'KNOW MORE' : 'SAIBA MAIS'}</Text>
 
                         </TouchableOpacity>
 
@@ -122,11 +139,14 @@ export function CardPosts() {
                         autoSize={true}
                         resizeMode='cover'
                     /> :
+
                     posts.length == 0 ?
+
                         <Text style={{ color: 'white', justifyContent: 'center', alignItems: 'center', marginTop: '80%' }} >
                             Nenhum Post escontrado
                         </Text>
                         :
+
                         <FlatList<TPost>
                             style={{ width: '100%', paddingTop: 20 }}
                             data={posts}
@@ -172,13 +192,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 40,
-        marginTop: 96,
+        marginTop: 15,
     },
     buttonText: {
         fontSize: 24
     },
     titlePost: {
         fontSize: 48,
-        color: 'white'
+        color: 'white',
+        width: '100%',
+        textAlign: 'center',
     },
+    subTitlePost: {
+        color: 'white',
+        width: '100%',
+        textAlign: 'center',
+        fontSize: 25,
+        fontWeight: '300'
+    }
 })

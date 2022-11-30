@@ -10,7 +10,7 @@ export const Input = ({ errorMessage = null, isInvalid, ...rest }: Props) => {
     const invalid = !!errorMessage || isInvalid
 
     return (
-        <FormControl mb={4} isInvalid={invalid} >
+        <FormControl isInvalid={invalid} >
             <InputNB
                 bg='white'
                 w='full'
@@ -18,7 +18,7 @@ export const Input = ({ errorMessage = null, isInvalid, ...rest }: Props) => {
                 fontSize='md'
                 isInvalid={invalid}
                 _invalid={{
-                    borderColor: 'red.500',
+                    borderColor: 'red.600',
                     borderWidth: 2
                 }}
 

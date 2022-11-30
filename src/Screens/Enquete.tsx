@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ButtonSVG from '../assets/img/buttonSurvey.svg';
+import ButtonSVGEng from '../assets/img/ButtonSVGEng.svg';
 import { Input } from '../Components/Input';
 import { Select } from '../Components/Select';
 import { LanguageContext } from '../Contexts/LanguageProvider';
@@ -63,7 +64,7 @@ export function EnqueteScreen() {
 
     const { control, handleSubmit, formState: { errors } } = useForm<formDataProps>()
 
-    const { texts } = useContext(LanguageContext)
+    const { texts, language } = useContext(LanguageContext)
 
     const [perguntas, setPerguntas] = React.useState<TPerguntas[]>([])
 
@@ -108,12 +109,12 @@ export function EnqueteScreen() {
                 <ScrollView style={{ width: '100%' }}>
                     <FormControl>
                         <View style={styles.contentPerguntas}>
-                            <Text style={styles.peguntas}>Qual o seu nome? <Text style={styles.requered} >*</Text>  </Text>
+                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p1} <Text style={styles.requered} >*</Text>  </Text>
                             <Controller
                                 control={control}
                                 name='nome'
                                 rules={{
-                                    required: 'Informe o nome'
+                                    required: texts.enquete.mensagemDeErro.p1
                                 }}
                                 defaultValue=""
                                 render={({ field: { onChange } }) => (
@@ -123,12 +124,12 @@ export function EnqueteScreen() {
                                 )}
                             />
 
-                            <Text style={styles.peguntas}>Qual o seu país de origem? <Text style={styles.requered} >*</Text> </Text>
+                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p2} <Text style={styles.requered} >*</Text> </Text>
                             <Controller
                                 control={control}
                                 name='pais_de_origem'
                                 rules={{
-                                    required: 'Informe o pais'
+                                    required: texts.enquete.mensagemDeErro.p2
                                 }}
                                 defaultValue=""
                                 render={({ field: { onChange } }) => (
@@ -136,7 +137,7 @@ export function EnqueteScreen() {
                                 )}
                             />
 
-                            <Text style={styles.peguntas}>Há quanto tempo está no Brasil? <Text style={styles.requered} >*</Text> </Text>
+                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p3} <Text style={styles.requered} >*</Text> </Text>
                             <Controller
                                 control={control}
                                 name='tempo_no_brasil'
@@ -149,7 +150,7 @@ export function EnqueteScreen() {
                                 )}
                             />
 
-                            <Text style={styles.peguntas}>Atualmente você está empregado? <Text style={styles.requered} >*</Text> </Text>
+                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p4} <Text style={styles.requered} >*</Text> </Text>
                             <Controller
                                 control={control}
                                 name='esta_empregado'
@@ -161,12 +162,12 @@ export function EnqueteScreen() {
                                 )}
                             />
 
-                            <Text style={styles.peguntas}>Qual é a maior dificuldade enfrentada como imigrante? <Text style={styles.requered} >*</Text> </Text>
+                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p5} <Text style={styles.requered} >*</Text> </Text>
                             <Controller
                                 control={control}
                                 name='dificuldade_imigrante'
                                 rules={{
-                                    required: 'Informe a descrição'
+                                    required: texts.enquete.mensagemDeErro.p5
                                 }}
                                 defaultValue=""
                                 render={({ field: { onChange } }) => (
@@ -186,7 +187,7 @@ export function EnqueteScreen() {
                                 style={styles.button}
                                 onPress={handleSubmit(handdleSubmit)}
                             >
-                                <ButtonSVG />
+                                {language == 'english' ? <ButtonSVGEng /> : <ButtonSVG />}
                             </TouchableOpacity>
 
                         </View>

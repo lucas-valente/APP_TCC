@@ -1,6 +1,7 @@
 import { FormControl, Radio, WarningOutlineIcon } from 'native-base';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { LanguageContext } from '../../Contexts/LanguageProvider';
 
 type Props = {
     errorMessage?: string | null
@@ -9,6 +10,8 @@ type Props = {
 }
 
 export const RadioButtonEmpregado = ({ errorMessage, onChange }: Props) => {
+
+    const { texts, language } = React.useContext(LanguageContext)
 
     const invalid = !!errorMessage
 
@@ -20,14 +23,14 @@ export const RadioButtonEmpregado = ({ errorMessage, onChange }: Props) => {
                         onChange(value)
                     }}>
                     <Radio value='sim' my="1" >
-                        <Text style={styles.radio}>Sim</Text>
+                        <Text style={styles.radio}>{language == 'english' ? 'Yes' : 'Sim'}</Text>
                     </Radio>
                     <Radio value='nao' my="1" >
-                        <Text style={styles.radio}>Não</Text>
+                        <Text style={styles.radio}>{language == 'english' ? 'No' : 'Não'}</Text>
                     </Radio>
                 </Radio.Group>
                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                    You must select a Prize.
+                    {language == 'english' ? 'Select an option' : 'Selecione uma opção'}
                 </FormControl.ErrorMessage>
             </FormControl>
         </View>

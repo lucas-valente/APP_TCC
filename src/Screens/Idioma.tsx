@@ -8,7 +8,7 @@ import IconArrowBack from '../assets/img/arrowBack.svg';
 
 import BrasilIcon from '../assets/img/IconBrasil.png';
 import UsaIcon from '../assets/img/IconUsa.png';
-import Logo from '../assets/img/logo.svg';
+import Logo2 from '../assets/img/lg2.png';
 
 import { LanguageContext } from '../Contexts/LanguageProvider';
 
@@ -28,30 +28,29 @@ export function ModalIdiomaScreen() {
                 colors={['#44DD9D', '#142F47']}
                 style={styles.linearGradient}
             >
-                <View >
-
+                <View style={{ padding: 3 }}>
                     <TouchableOpacity
                         activeOpacity={0.7}
-                        style={styles.touchableOpacityStyle}
                         onPress={openScreen}
                     >
-                        <View>
+                        <View style={styles.touchableOpacityStyle}>
                             <IconArrowBack
                                 width={25}
                                 height={25}
-                                color='white'
                             />
                         </View>
 
                     </TouchableOpacity>
-
                 </View>
 
                 <View style={styles.content}>
-                    <Logo width={150} height={150} />
+
+                    <Image source={Logo2} />
+
                     <Text style={styles.textHeader}>Migrantes Curitiba</Text>
                     <Text style={styles.TextDesc}>Select your language</Text>
                     <Text style={styles.TextDesc}>Selecione seu idioma</Text>
+
                     <View style={styles.contentimg}>
 
                         <TouchableOpacity
@@ -93,7 +92,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     linearGradient: {
-        position: 'relative',
         flex: 1,
         width: '100%'
     },
@@ -103,7 +101,7 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
 
     },
     textHeader: {

@@ -16,6 +16,22 @@ type texts = {
       },
       enquete: {
         header: string
+        perguntas: {
+          p1: string,
+          p2: string,
+          p3: string,
+          p4: string,
+          p5: string,
+        }
+        mensagemDeErro: {
+          p1: string,
+          p2: string,
+          p5: string,
+        },
+        mapText: {
+          title: string,
+          subTitle: string
+        }
       },
       idioma: {
         header: string
@@ -30,7 +46,19 @@ const initialValue = {
       header: 'Casa'
     },
     enquete: {
-      header: 'Enquete'
+      header: 'Enquete',
+      perguntas: {
+        p1: 'Qual o seu nome ?',
+        p2: 'Qual o seu país de origem ?',
+        p3: 'Há quanto tempo está no Brasil ?',
+        p4: 'Atualmente você está empregado ?',
+        p5: 'Qual é a maior dificuldade enfrentada como imigrante ?',
+      },
+      mensagemDeErro: {
+        p1: 'Informe o nome',
+        p2: 'Informe o pais',
+        p5: 'Informe a descrição',
+      }
     },
     posts: {
       header: 'Posts'
@@ -51,12 +79,29 @@ const initialValue = {
 
 export const LanguageContext = createContext({
   language: "portuguese",
+
   texts: {
     home: {
       header: 'Casa'
     },
     enquete: {
-      header: 'Enquete'
+      header: 'Enquete',
+      perguntas: {
+        p1: 'Qual o seu nome ?',
+        p2: 'Qual o seu país de origem ?',
+        p3: 'Há quanto tempo está no Brasil ?',
+        p4: 'Atualmente você está empregado ?',
+        p5: 'Qual é a maior dificuldade enfrentada como imigrante ?',
+      },
+      mensagemDeErro: {
+        p1: 'Informe o nome',
+        p2: 'Informe o pais',
+        p5: 'Informe a descrição',
+      },
+      mapText: {
+        title: 'Como Chegar !',
+        subTitle: 'Clique no mapa para encontrar a sua rota'
+      }
     },
     posts: {
       header: 'Posts'
@@ -73,8 +118,10 @@ export const LanguageContext = createContext({
       },
     }
   },
+
   toggleLanguageP: () => { },
   toggleLanguageI: () => { }
+
 });
 
 type props = {
@@ -84,6 +131,7 @@ type props = {
 const LanguageContextProvider = ({ children }: props) => {
 
   const [language, setLanguage] = useState("portuguese");
+
   const [texts, setTexts] = useState<texts | any>(initialValue);
 
   const toggleLanguageP = () => {
@@ -93,7 +141,23 @@ const LanguageContextProvider = ({ children }: props) => {
         header: 'Casa'
       },
       enquete: {
-        header: 'Enquete'
+        header: 'Enquete',
+        perguntas: {
+          p1: 'Qual o seu nome ?',
+          p2: 'Qual o seu país de origem ?',
+          p3: 'Há quanto tempo está no Brasil ?',
+          p4: 'Atualmente você está empregado ?',
+          p5: 'Qual é a maior dificuldade enfrentada como imigrante ?',
+        },
+        mensagemDeErro: {
+          p1: 'Informe o nome',
+          p2: 'Informe o pais',
+          p5: 'Informe a descrição',
+        },
+        mapText: {
+          title: 'Como Chegar !',
+          subTitle: 'Clique no mapa para encontrar a sua rota'
+        }
       },
       posts: {
         header: 'Posts'
@@ -104,6 +168,7 @@ const LanguageContextProvider = ({ children }: props) => {
         },
         enquete: {
           header: 'ENQUETE'
+
         },
         idioma: {
           header: 'IDIOMA'
@@ -115,6 +180,7 @@ const LanguageContextProvider = ({ children }: props) => {
     return setLanguage("portuguese"), setTexts(Textos);
 
   };
+
   const toggleLanguageI = () => {
 
     const Textos = {
@@ -122,7 +188,23 @@ const LanguageContextProvider = ({ children }: props) => {
         header: 'Home'
       },
       enquete: {
-        header: 'Survey'
+        header: 'Survey',
+        perguntas: {
+          p1: 'What is your name ?',
+          p2: 'What is your country of origin ?',
+          p3: 'How long has it been in Brazil ?',
+          p4: 'You are currently employed ?',
+          p5: 'What is the greatest difficulty faced as an immigrant ?',
+        },
+        mensagemDeErro: {
+          p1: 'Inform the name',
+          p2: 'Inform the coutry',
+          p5: 'Inform the description',
+        },
+        mapText: {
+          title: 'How to Get There !',
+          subTitle: 'Click on the map to find your route'
+        }
       },
       posts: {
         header: 'Posts'
@@ -143,11 +225,13 @@ const LanguageContextProvider = ({ children }: props) => {
     return setLanguage("english"), setTexts(Textos);
 
   };
+
   return (
     <LanguageContext.Provider value={{ language, toggleLanguageP, toggleLanguageI, texts }}>
       {children}
     </LanguageContext.Provider>
   );
+
 };
 
 export default LanguageContextProvider;

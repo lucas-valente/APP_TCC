@@ -1,6 +1,9 @@
+import { Image } from 'native-base';
 import * as React from 'react';
 import { useContext } from 'react';
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import IconArrowBack from '../../assets/img/arrowBack.svg';
+import Map from '../../assets/img/map.png';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
 import { TPost } from '../CardPosts';
 
@@ -11,13 +14,15 @@ type props = {
 }
 export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
 
-    const { texts } = useContext(LanguageContext)
+    const { texts, language } = useContext(LanguageContext)
+
+    const window = useWindowDimensions();
 
     return (
         <>
 
             <Modal
-                animationType="fade"
+                animationType="slide"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
@@ -25,20 +30,53 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
                 }}
             >
                 <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
 
-                        <Text style={styles.modalText}>{post?.post_titulo}</Text>
+                    <View>
 
-                        <Text style={styles.modalText}>{post?.post_conteudo}</Text>
-
-                        <Pressable
-                            style={[styles.button, styles.buttonClose]}
+                        <TouchableOpacity
+                            activeOpacity={0.7}
                             onPress={() => setModalVisible(!modalVisible)}
                         >
-                            <Text style={styles.textStyle}>Hide Modal</Text>
-                        </Pressable>
+                            <View style={styles.touchableOpacityStyle}>
+
+                                <IconArrowBack
+                                    width={25}
+                                    height={25}
+                                />
+
+                            </View>
+
+                        </TouchableOpacity>
+
                     </View>
+
+                    <View style={styles.modalView}>
+
+                        <Text style={styles.modalTextTitle}>{post?.post_titulo}</Text>
+
+                        <Text style={styles.modalTextBody}>{post?.post_conteudo}</Text>
+
+                        <View style={styles.map}>
+
+                            <View style={styles.mapTextContent}>
+                                <Text style={styles.TextTitleMap}>{texts.enquete.mapText.title}</Text>
+                                <Text style={styles.TextSubTitleMap}>{texts.enquete.mapText.subTitle}</Text>
+                            </View>
+
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                onPress={() => false}
+                            >
+                                <Image source={Map} alt='Map' style={styles.mapImg} />
+
+                            </TouchableOpacity>
+
+                        </View>
+
+                    </View>
+
                 </View>
+
             </Modal>
 
         </>
@@ -47,40 +85,25 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
 
 const styles = StyleSheet.create({
 
-    button: {
-        backgroundColor: 'white',
-        width: 203,
-        height: 53,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 40,
-        marginTop: 96,
-    },
     centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        backgroundColor: "#E1E1E1",
+        paddingVertical: 20
     },
     modalView: {
-        flex: 1,
+        height: '100%',
         width: '100%',
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
+        alignItems: "center"
     },
-    modalText: {
+    modalTextBody: {
         marginBottom: 15,
-        textAlign: "center"
+        fontSize: 16,
+        paddingHorizontal: 3,
+        textAlign: 'left'
+    },
+    modalTextTitle: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 32
     },
     buttonClose: {
         backgroundColor: "#2196F3",
@@ -90,4 +113,30 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center"
     },
+    touchableOpacityStyle: {
+        margin: 3,
+    },
+    map: {
+        position: 'absolute',
+        bottom: "5.5%",
+        width: '100%',
+        alignItems: "center",
+        justifyContent: 'center',
+        backgroundColor: '#363535',
+        paddingVertical: 4
+    },
+    mapImg: {
+        marginVertical: 5
+    },
+    mapTextContent: {
+        alignItems: 'center'
+    },
+    TextTitleMap: {
+        fontSize: 32,
+        color: 'white'
+    },
+    TextSubTitleMap: {
+        fontSize: 15,
+        color: 'white'
+    }
 })
