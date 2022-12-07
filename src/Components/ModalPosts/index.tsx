@@ -1,7 +1,7 @@
 import { Image } from 'native-base';
 import * as React from 'react';
 import { useContext } from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Linking, Modal, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import IconArrowBack from '../../assets/img/arrowBack.svg';
 import Map from '../../assets/img/map.png';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
@@ -17,6 +17,10 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
     const { texts, language } = useContext(LanguageContext)
 
     const window = useWindowDimensions();
+
+    function linkMaps() {
+
+    }
 
     return (
         <>
@@ -56,7 +60,7 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
 
                         <Text style={styles.modalTextBody}>{post?.post_conteudo}</Text>
 
-                        <View style={styles.map}>
+                        <View style={post?.link == '' || post?.link == 'http://semLink.com' ? { display: 'none' } : styles.map}>
 
                             <View style={styles.mapTextContent}>
                                 <Text style={styles.TextTitleMap}>{texts.enquete.mapText.title}</Text>
@@ -65,7 +69,7 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
 
                             <TouchableOpacity
                                 activeOpacity={0.7}
-                                onPress={() => false}
+                                onPress={() => { Linking.openURL(post?.link!); }}
                             >
                                 <Image source={Map} alt='Map' style={styles.mapImg} />
 

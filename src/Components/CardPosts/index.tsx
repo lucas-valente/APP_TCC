@@ -2,7 +2,7 @@ import axios from 'axios';
 import LottieView from 'lottie-react-native';
 import * as React from 'react';
 import { useContext, useState } from 'react';
-import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import loading from '../../assets/img/loading2.json';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
@@ -16,6 +16,7 @@ export type TPost = {
     imagem: string
     user: number
     idioma: number
+    link: string
 }
 
 type props = {
@@ -58,9 +59,9 @@ export function CardPosts() {
 
     const [idiomaFilter, setidiomaFilter] = useState<number | null>(null);
 
+    const [refreshing, setRefreshing] = useState(false);
 
-
-    React.useEffect(() => {
+    async function fetch() {
 
         switch (language) {
             case 'english':
@@ -68,24 +69,37 @@ export function CardPosts() {
                 break;
 
             case 'portuguese':
-                setidiomaFilter(3)
+                setidiomaFilter(1)
                 break;
         }
 
-        async function fetch() {
-            try {
+        try {
 
-                const getPosts: TPost[] = await api.GetPosts()
-                setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 2 : post.idioma == idiomaFilter)))
-                setIsLoading(false)
+            const getPosts: TPost[] = await api.GetPosts()
+            setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
+            setIsLoading(false)
+            setRefreshing(false)
 
-            } catch (error) {
-                console.warn(error)
-            }
+        } catch (error) {
+            console.warn(error)
         }
-        fetch()
-    }, [language])
+    }
 
+    React.useEffect(() => {
+
+        switch (language) {
+            case 'english':
+                setidiomaFilter(1)
+                break;
+
+            case 'portuguese':
+                setidiomaFilter(2)
+                break;
+        }
+
+        fetch()
+
+    }, [language])
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -124,6 +138,11 @@ export function CardPosts() {
         )
     }
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        setIsLoading(true)
+        fetch();
+    };
 
     return (
         <View style={styles.container}>
@@ -135,7 +154,7 @@ export function CardPosts() {
                         source={loading}
                         autoPlay={true}
                         loop={true}
-                        style={{ flex: 1, position: 'absolute', top: 0, justifyContent: 'center', alignItems: 'center', width: 500 }}
+                        style={{ flex: 1, position: 'absolute', top: '20%', justifyContent: 'center', alignItems: 'center', width: 500 }}
                         autoSize={true}
                         resizeMode='cover'
                     /> :
@@ -152,6 +171,12 @@ export function CardPosts() {
                             data={posts}
                             keyExtractor={({ id: key }) => key.toString()}
                             renderItem={_renderItem}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }
                         />
             }
         </View >

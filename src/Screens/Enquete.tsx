@@ -36,11 +36,11 @@ export type TPais = {
     sigla: string
 }
 
-const api = axios.create({
-    baseURL: 'https://restapitcc.herokuapp.com/api/v1/'
-})
-
 export function useApi() {
+
+    const api = axios.create({
+        baseURL: 'https://restapitcc.herokuapp.com/api/v1/'
+    })
 
     const username = 'lucas.valente'
     const password = 'YTuNWNSN4GQ2xdp'
@@ -91,7 +91,7 @@ export function EnqueteScreen() {
         if (dta == 201) {
             return setShow(true)
         } else {
-            return console.warn("Erro ao envir formulario");
+            return console.warn("Erro ao enviar formulario");
         }
 
     }
