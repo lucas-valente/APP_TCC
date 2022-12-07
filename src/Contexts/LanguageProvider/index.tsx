@@ -191,10 +191,10 @@ const LanguageContextProvider = ({ children }: props) => {
         header: 'Survey',
         perguntas: {
           p1: 'What is your name ?',
-          p2: 'What is your country of origin ?',
-          p3: 'How long has it been in Brazil ?',
-          p4: 'You are currently employed ?',
-          p5: 'What is the greatest difficulty faced as an immigrant ?',
+          p2: 'Where are you from ?',
+          p3: 'How long have you been in Brazil ?',
+          p4: 'Are you currently employed ?',
+          p5: 'What is the greatest difficulty have you faced as an immigrant ?',
         },
         mensagemDeErro: {
           p1: 'Inform the name',
