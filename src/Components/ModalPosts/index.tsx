@@ -60,7 +60,7 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
 
                         <Text style={styles.modalTextBody}>{post?.post_conteudo}</Text>
 
-                        <View style={styles.map}>
+                        <View style={post?.link == '' || post?.link == 'http://semLink.com' ? { display: 'none' } : styles.map}>
 
                             <View style={styles.mapTextContent}>
                                 <Text style={styles.TextTitleMap}>{texts.enquete.mapText.title}</Text>
