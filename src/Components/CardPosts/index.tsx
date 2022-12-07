@@ -16,6 +16,7 @@ export type TPost = {
     imagem: string
     user: number
     idioma: number
+    link: string
 }
 
 type props = {
@@ -64,11 +65,11 @@ export function CardPosts() {
 
         switch (language) {
             case 'english':
-                setidiomaFilter(2)
+                setidiomaFilter(1)
                 break;
 
             case 'portuguese':
-                setidiomaFilter(3)
+                setidiomaFilter(2)
                 break;
         }
 
@@ -76,7 +77,7 @@ export function CardPosts() {
             try {
 
                 const getPosts: TPost[] = await api.GetPosts()
-                setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 2 : post.idioma == idiomaFilter)))
+                setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
                 setIsLoading(false)
 
             } catch (error) {
