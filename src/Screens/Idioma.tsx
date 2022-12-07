@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as React from 'react';
 import { useContext } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import IconArrowBack from '../assets/img/arrowBack.svg';
 
@@ -28,58 +28,59 @@ export function ModalIdiomaScreen() {
                 colors={['#44DD9D', '#142F47']}
                 style={styles.linearGradient}
             >
-                <View style={{ padding: 3 }}>
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={openScreen}
-                    >
-                        <View style={styles.touchableOpacityStyle}>
-                            <IconArrowBack
-                                width={25}
-                                height={25}
-                            />
+                <ScrollView style={{ width: '100%' }}>
+                    <View style={{ padding: 3 }}>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            onPress={openScreen}
+                        >
+                            <View style={styles.touchableOpacityStyle}>
+                                <IconArrowBack
+                                    width={25}
+                                    height={25}
+                                />
+                            </View>
+
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.content}>
+
+                        <Image source={Logo2} />
+
+                        <Text style={styles.textHeader}>Migrantes Curitiba</Text>
+                        <Text style={styles.TextDesc}>Select your language</Text>
+                        <Text style={styles.TextDesc}>Selecione seu idioma</Text>
+
+                        <View style={styles.contentimg}>
+
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                style={styles.touchableOpacityStyle}
+                                onPress={toggleLanguageI}
+                            >
+                                <View style={styles.img}>
+                                    <Image source={UsaIcon} style={{ marginBottom: 30 }} />
+                                    <Text style={styles.TextDesc}>ENGLISH</Text>
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                style={styles.touchableOpacityStyle}
+                                onPress={toggleLanguageP}
+                            >
+                                <View style={styles.img}>
+                                    <Image source={BrasilIcon} style={{ marginBottom: 30 }} />
+                                    <Text style={styles.TextDesc}>PORTUGUESE</Text>
+                                </View>
+                            </TouchableOpacity>
+
                         </View>
-
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.content}>
-
-                    <Image source={Logo2} />
-
-                    <Text style={styles.textHeader}>Migrantes Curitiba</Text>
-                    <Text style={styles.TextDesc}>Select your language</Text>
-                    <Text style={styles.TextDesc}>Selecione seu idioma</Text>
-
-                    <View style={styles.contentimg}>
-
-                        <TouchableOpacity
-                            activeOpacity={0.7}
-                            style={styles.touchableOpacityStyle}
-                            onPress={toggleLanguageI}
-                        >
-                            <View style={styles.img}>
-                                <Image source={UsaIcon} style={{ marginBottom: 30 }} />
-                                <Text style={styles.TextDesc}>ENGLISH</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            activeOpacity={0.7}
-                            style={styles.touchableOpacityStyle}
-                            onPress={toggleLanguageP}
-                        >
-                            <View style={styles.img}>
-                                <Image source={BrasilIcon} style={{ marginBottom: 30 }} />
-                                <Text style={styles.TextDesc}>PORTUGUESE</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <Text style={styles.TextDesc}>{language}</Text>
 
                     </View>
-                    <Text style={styles.TextDesc}>{language}</Text>
-
-                </View>
-
+                </ScrollView>
             </LinearGradient>
         </View >
     )
@@ -100,8 +101,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        alignItems: 'center',
-        // justifyContent: 'center',
+        alignItems: 'center'
 
     },
     textHeader: {

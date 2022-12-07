@@ -1,11 +1,15 @@
 import { FormControl, IInputProps, Input as InputNB, WarningOutlineIcon } from 'native-base';
-
+import React from 'react';
 type Props = IInputProps & {
     errorMessage?: string | null
 
 }
 
+import { LanguageContext } from '../../Contexts/LanguageProvider';
+
 export const Input = ({ errorMessage = null, isInvalid, ...rest }: Props) => {
+
+    const { language } = React.useContext(LanguageContext)
 
     const invalid = !!errorMessage || isInvalid
 
@@ -26,7 +30,7 @@ export const Input = ({ errorMessage = null, isInvalid, ...rest }: Props) => {
             />
 
             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                {errorMessage}
+                {language == 'english' ? 'Required field!' : 'Campo obrigatório!'}
             </FormControl.ErrorMessage>
 
         </FormControl>

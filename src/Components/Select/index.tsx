@@ -36,7 +36,7 @@ export const Select = ({ errorMessage = null, paises, onChange, ...rest }: Props
             </SelectNB>
 
             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                {errorMessage}
+                {language == 'english' ? 'Required field!' : 'Campo obrigatório!'}
             </FormControl.ErrorMessage>
 
         </FormControl>

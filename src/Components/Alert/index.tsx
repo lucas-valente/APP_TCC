@@ -1,5 +1,6 @@
 import { Alert, Box, CloseIcon, Collapse, HStack, IconButton, Text, VStack } from 'native-base';
 import React from 'react';
+import { LanguageContext } from '../../Contexts/LanguageProvider';
 
 type props = {
     show: boolean
@@ -7,6 +8,10 @@ type props = {
 }
 
 export function AlertSucess({ setShow, show }: props) {
+
+
+    const { texts, language } = React.useContext(LanguageContext)
+
     return <Box w="100%" alignItems="center">
 
         <Collapse isOpen={show}>
@@ -24,7 +29,7 @@ export function AlertSucess({ setShow, show }: props) {
                             <Text fontSize="md" fontWeight="medium" _dark={{
                                 color: "coolGray.800"
                             }}>
-                                Enquete enviada com sucesso!
+                                {language == 'english' ? 'Poll sent successfully!' : 'Enquete enviada com sucesso!'}
                             </Text>
 
                         </HStack>
