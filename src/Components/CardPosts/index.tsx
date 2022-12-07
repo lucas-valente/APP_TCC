@@ -2,7 +2,7 @@ import axios from 'axios';
 import LottieView from 'lottie-react-native';
 import * as React from 'react';
 import { useContext, useState } from 'react';
-import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import loading from '../../assets/img/loading2.json';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
@@ -59,7 +59,31 @@ export function CardPosts() {
 
     const [idiomaFilter, setidiomaFilter] = useState<number | null>(null);
 
+    const [refreshing, setRefreshing] = useState(false);
 
+    async function fetch() {
+
+        switch (language) {
+            case 'english':
+                setidiomaFilter(2)
+                break;
+
+            case 'portuguese':
+                setidiomaFilter(1)
+                break;
+        }
+
+        try {
+
+            const getPosts: TPost[] = await api.GetPosts()
+            setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
+            setIsLoading(false)
+            setRefreshing(false)
+
+        } catch (error) {
+            console.warn(error)
+        }
+    }
 
     React.useEffect(() => {
 
@@ -73,20 +97,9 @@ export function CardPosts() {
                 break;
         }
 
-        async function fetch() {
-            try {
-
-                const getPosts: TPost[] = await api.GetPosts()
-                setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
-                setIsLoading(false)
-
-            } catch (error) {
-                console.warn(error)
-            }
-        }
         fetch()
-    }, [language])
 
+    }, [language])
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -125,6 +138,11 @@ export function CardPosts() {
         )
     }
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        setIsLoading(true)
+        fetch();
+    };
 
     return (
         <View style={styles.container}>
@@ -153,6 +171,12 @@ export function CardPosts() {
                             data={posts}
                             keyExtractor={({ id: key }) => key.toString()}
                             renderItem={_renderItem}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }
                         />
             }
         </View >
