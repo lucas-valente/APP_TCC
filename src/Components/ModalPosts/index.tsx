@@ -2,10 +2,11 @@ import { Image } from 'native-base';
 import * as React from 'react';
 import { useContext } from 'react';
 import { Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { TPost } from '../../@types/types';
+
 import IconArrowBack from '../../assets/img/arrowBack.svg';
 import Map from '../../assets/img/map.png';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
-import { TPost } from '../CardPosts';
 
 type props = {
     setModalVisible: Function
@@ -16,24 +17,22 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
 
     const { texts, language } = useContext(LanguageContext)
 
-    const window = useWindowDimensions();
-
-    function linkMaps() {
-
-    }
+    const windowScreen = useWindowDimensions();
 
     return (
         <>
 
             <Modal
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
                     setModalVisible(!modalVisible);
                 }}
+                style={{ flex: 1 }}
             >
-                <ScrollView style={{ width: '100%' }}>
+                <ScrollView style={{ width: '100%', backgroundColor: "#E1E1E1", }}>
+
                     <View style={styles.centeredView}>
 
                         <View>
@@ -54,11 +53,18 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
                             </TouchableOpacity>
 
                         </View>
+
                         <View style={styles.modalView}>
 
                             <Text style={styles.modalTextTitle}>{post?.post_titulo}</Text>
 
-                            <Text style={styles.modalTextBody}>{post?.post_conteudo}</Text>
+                            <Text style={post?.link == null || post?.link != 'http://semLink.com' ? {
+                                paddingBottom: 0,
+                                marginBottom: 15,
+                                fontSize: 16,
+                                paddingHorizontal: 10,
+                                textAlign: 'left',
+                            } : styles.modalTextBody}>{post?.post_conteudo}</Text>
 
                             <View style={post?.link == '' || post?.link == 'http://semLink.com' ? { display: 'none' } : styles.map}>
 
@@ -74,12 +80,13 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
                                     <Image source={Map} alt='Map' style={styles.mapImg} />
 
                                 </TouchableOpacity>
-                            </View>
 
+                            </View>
 
                         </View>
 
                     </View>
+
                 </ScrollView>
             </Modal>
 
@@ -90,12 +97,11 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
 const styles = StyleSheet.create({
 
     centeredView: {
-        backgroundColor: "#E1E1E1",
-        paddingVertical: 20
+        paddingTop: 20,
     },
     modalView: {
         height: '100%',
-        width: '100%',
+        width: "100%",
         alignItems: "center"
     },
     modalTextBody: {
@@ -103,7 +109,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         paddingHorizontal: 10,
         textAlign: 'left',
-        paddingBottom: 300
     },
     modalTextTitle: {
         marginBottom: 15,
@@ -119,11 +124,10 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     touchableOpacityStyle: {
-        margin: 3,
+        margin: 3
     },
     map: {
-        position: 'absolute',
-        bottom: "3.5%",
+        bottom: -5,
         width: '100%',
         alignItems: "center",
         justifyContent: 'center',
@@ -131,7 +135,7 @@ const styles = StyleSheet.create({
         paddingVertical: 4
     },
     mapImg: {
-        marginVertical: 5
+        marginVertical: '10%'
     },
     mapTextContent: {
         alignItems: 'center'

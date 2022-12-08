@@ -2,26 +2,12 @@ import axios from 'axios';
 import LottieView from 'lottie-react-native';
 import * as React from 'react';
 import { useContext, useState } from 'react';
-import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TPost } from '../../@types/types';
 
 import loading from '../../assets/img/loading2.json';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
 import { ModalPosts } from '../ModalPosts';
-
-export type TPost = {
-    id: number
-    post_titulo: string
-    post_descricao: string
-    post_conteudo: string
-    imagem: string
-    user: number
-    idioma: number
-    link: string
-}
-
-type props = {
-    item: TPost
-}
 
 export function useApi() {
 
@@ -57,77 +43,63 @@ export function CardPosts() {
 
     const [isLoading, setIsLoading] = useState(true);
 
-    const [idiomaFilter, setidiomaFilter] = useState<number | null>(null);
+    const [idiomaFilter, setidiomaFilter] = useState<number>(1);
 
     const [refreshing, setRefreshing] = useState(false);
 
-    // async function fetchOut() {
+    async function fetchOut() {
 
-    //     switch (language) {
-    //         case 'english':
-    //             setidiomaFilter(2)
-    //             break;
+        switch (language) {
 
-    //         case 'portuguese':
-    //             setidiomaFilter(1)
-    //             break;
-    //     }
+            case 'portuguese':
+                setidiomaFilter(1)
+                break;
 
-
-    //     try {
-
-    //         const getPosts: TPost[] = await api.GetPosts()
-    //         setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
-    //         setIsLoading(false)
-    //         setRefreshing(false)
-
-    //     } catch (error) {
-    //         console.warn(error)
-    //     }
-    // }
-
-    React.useEffect(() => {
-
-        // switch (language) {
-        //     case 'english':
-        //         setidiomaFilter(1)
-        //         break;
-
-        //     case 'portuguese':
-        //         setidiomaFilter(2)
-        //         break;
-        // }
-
-        async function fetch() {
-
-            switch (language) {
-                case 'english':
-                    setidiomaFilter(1)
-                    break;
-
-                case 'portuguese':
-                    setidiomaFilter(2)
-                    break;
-            }
-
-
-            try {
-
-                const getPosts: TPost[] = await api.GetPosts()
-                setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
-                setIsLoading(false)
-                setRefreshing(false)
-
-            } catch (error) {
-                console.warn(error)
-            }
+            case 'english':
+                setidiomaFilter(2)
+                break;
         }
 
+        try {
 
-        fetch()
+            const getPosts: TPost[] = await api.GetPosts()
 
+            setPosts(getPosts.filter(post => (post.idioma == idiomaFilter)))
+            setIsLoading(false)
+            setRefreshing(false)
 
-    }, [language])
+        } catch (error) {
+            console.warn(error)
+        }
+    }
+
+    async function fetchIn() {
+
+        switch (idiomaFilter) {
+
+            case 1:
+                setidiomaFilter(1)
+                break;
+
+            case 2:
+                setidiomaFilter(2)
+                break;
+        }
+
+        try {
+
+            const getPosts: TPost[] = await api.GetPosts()
+            // setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
+            setPosts(getPosts.filter(post => (post.idioma == idiomaFilter)))
+            setIsLoading(false)
+            setRefreshing(false)
+
+        } catch (error) {
+            console.warn(error)
+        }
+    }
+
+    React.useEffect(() => { fetchOut() }, [language, idiomaFilter])
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -138,7 +110,7 @@ export function CardPosts() {
         return setPost(setpost)
     }
 
-    function _renderItem({ item }: props) {
+    function _renderItem({ item }: { item: TPost }) {
         return (
             <View style={styles.containerPost}>
 
@@ -153,7 +125,7 @@ export function CardPosts() {
                             style={styles.button}
                             onPress={() => handleModal(item)}
                         >
-                            <Text style={styles.buttonText}>{language == 'english' ? 'KNOW MORE' : 'SAIBA MAIS'}</Text>
+                            <Text style={styles.buttonText}>{language == 'english' ? 'MORE' : 'SAIBA MAIS'}</Text>
 
                         </TouchableOpacity>
 
@@ -169,7 +141,7 @@ export function CardPosts() {
     const onRefresh = () => {
         setRefreshing(true);
         setIsLoading(true)
-        // fetchOut();
+        fetchIn();
     };
 
     return (
@@ -190,7 +162,7 @@ export function CardPosts() {
                     posts.length == 0 ?
 
                         <Text style={{ color: 'white', justifyContent: 'center', alignItems: 'center', marginTop: '80%' }} >
-                            Nenhum Post escontrado
+                            {language == 'english' ? 'No posts found' : 'Nenhum Post escontrado'}
                         </Text>
                         :
 
@@ -199,12 +171,12 @@ export function CardPosts() {
                             data={posts}
                             keyExtractor={({ id: key }) => key.toString()}
                             renderItem={_renderItem}
-                        // refreshControl={
-                        //     <RefreshControl
-                        //         refreshing={refreshing}
-                        //         onRefresh={onRefresh}
-                        //     />
-                        // }
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }
                         />
             }
         </View >

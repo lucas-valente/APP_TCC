@@ -38,3 +38,13 @@ export type texts = {
         }
     }
 }
+export type TPost = {
+    id: number
+    post_titulo: string
+    post_descricao: string
+    post_conteudo: string
+    imagem: string
+    user: number
+    idioma: number
+    link: string
+}

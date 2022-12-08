@@ -1,6 +1,6 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, Dispatch, SetStateAction, useState } from "react";
 import { texts } from "../../@types/types";
-import { initialValue, languages, TextsEnglish, TextsPortuguese } from "../../Data/idiomas";
+import { languages, TextsEnglish, TextsPortuguese } from "../../Data/idiomas";
 
 type propsContext = {
   language: "portuguese",
@@ -8,17 +8,21 @@ type propsContext = {
   toggleLanguagePortuguese: void,
   toggleLanguageEnglish: void,
   toggleLanguage: void
+  setLanguage: Dispatch<SetStateAction<string>>
 }
 
-export const LanguageContext = createContext({
+export const LanguageContext = createContext<propsContext | any>(
+  {
 
-  language: "portuguese",
-  texts: initialValue,
-  toggleLanguagePortuguese: () => { },
-  toggleLanguageEnglish: () => { },
-  toggleLanguage: () => { }
+    language: "portuguese",
+    texts: TextsPortuguese,
+    toggleLanguagePortuguese: () => { },
+    toggleLanguageEnglish: () => { },
+    toggleLanguage: () => { },
+    setLanguage: (): Dispatch<SetStateAction<string>> | void => { }
 
-});
+  }
+);
 
 type props = {
   children: React.ReactNode
@@ -28,7 +32,7 @@ const LanguageContextProvider = ({ children }: props) => {
 
   const [language, setLanguage] = useState("portuguese");
 
-  const [texts, setTexts] = useState<texts | any>(initialValue);
+  const [texts, setTexts] = useState<texts | any>(TextsPortuguese);
 
   const toggleLanguagePortuguese = () => {
 
@@ -62,7 +66,7 @@ const LanguageContextProvider = ({ children }: props) => {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguagePortuguese, toggleLanguageEnglish, toggleLanguage, texts }}>
+    <LanguageContext.Provider value={{ language, toggleLanguagePortuguese, toggleLanguageEnglish, toggleLanguage, setLanguage, texts }}>
       {children}
     </LanguageContext.Provider>
   );

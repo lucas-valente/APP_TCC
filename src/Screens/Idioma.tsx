@@ -15,7 +15,7 @@ import { languages } from '../Data/idiomas';
 
 export function ModalIdiomaScreen() {
 
-    const { language, toggleLanguagePortuguese, toggleLanguageEnglish } = useContext(LanguageContext)
+    const { language, toggleLanguagePortuguese, toggleLanguageEnglish, setLanguage, toggleLanguage } = useContext(LanguageContext)
 
     const navigation = useNavigation()
 
@@ -30,7 +30,7 @@ export function ModalIdiomaScreen() {
                 <TouchableOpacity
                     activeOpacity={0.7}
                     style={styles.touchableOpacityStyle}
-                    onPress={toggleLanguagePortuguese}
+                    onPress={() => (setLanguage('portuguese'), toggleLanguagePortuguese)}
                 >
                     <View style={styles.img}>
                         <Image source={UsaIcon} style={{ marginBottom: 30 }} />
@@ -49,6 +49,7 @@ export function ModalIdiomaScreen() {
                 style={styles.linearGradient}
             >
                 <ScrollView style={{ width: '100%' }}>
+
                     <View style={{ padding: 3 }}>
                         <TouchableOpacity
                             activeOpacity={0.7}
@@ -77,7 +78,7 @@ export function ModalIdiomaScreen() {
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 style={styles.touchableOpacityStyle}
-                                onPress={toggleLanguageEnglish}
+                                onPress={() => (setLanguage('english'), toggleLanguageEnglish())}
                             >
                                 <View style={styles.img}>
                                     <Image source={UsaIcon} style={{ marginBottom: 30 }} />
@@ -88,7 +89,7 @@ export function ModalIdiomaScreen() {
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 style={styles.touchableOpacityStyle}
-                                onPress={toggleLanguagePortuguese}
+                                onPress={() => (setLanguage('portuguese'), toggleLanguagePortuguese())}
                             >
                                 <View style={styles.img}>
                                     <Image source={BrasilIcon} style={{ marginBottom: 30 }} />
@@ -96,9 +97,9 @@ export function ModalIdiomaScreen() {
                                 </View>
                             </TouchableOpacity>
 
-                            {
+                            {/* {
                                 idiomas()
-                            }
+                            } */}
 
                         </View>
                         <Text style={styles.TextDesc}>{language}</Text>
