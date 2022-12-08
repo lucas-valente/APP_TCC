@@ -90,7 +90,7 @@ export function CardPosts() {
         return (
             <View style={styles.containerPost}>
 
-                <ImageBackground source={{ uri: item.imagem }} style={{ width: '100%', flex: 1, borderRadius: 12 }} resizeMode="stretch">
+                <ImageBackground source={{ uri: item.imagem }} style={{ width: '100%', flex: 1, borderRadius: 12 }} resizeMode="stretch" blurRadius={5}>
                     <View style={styles.containerPostInterno}>
 
                         <Text style={styles.titlePost}>{item.post_titulo}</Text>
