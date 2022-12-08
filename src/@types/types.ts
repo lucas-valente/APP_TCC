@@ -38,6 +38,7 @@ export type texts = {
         }
     }
 }
+
 export type TPost = {
     id: number
     post_titulo: string
@@ -47,4 +48,24 @@ export type TPost = {
     user: number
     idioma: number
     link: string
+}
+
+export type TPerguntas = {
+    id: number,
+    perguntas_descri: string
+}
+
+export type TFormDataProps = {
+    nome: string
+    pais_de_origem: string,
+    tempo_no_brasil: string,
+    esta_empregado: string,
+    dificuldade_imigrante: string,
+}
+
+export type TPais = {
+    gentilico: string,
+    nome_pais: string,
+    nome_pais_int: string,
+    sigla: string
 }

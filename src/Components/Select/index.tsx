@@ -1,7 +1,7 @@
 import { FormControl, ISelectProps, Select as SelectNB, WarningOutlineIcon } from 'native-base';
 import React from 'react';
+import { TPais } from '../../@types/types';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
-import { TPais } from '../../Screens/Enquete';
 
 
 type Props = ISelectProps & {
@@ -9,9 +9,10 @@ type Props = ISelectProps & {
     isInvalid?: boolean
     paises: TPais[]
     onChange: Function
+    value: string
 }
 
-export const Select = ({ errorMessage = null, paises, onChange, ...rest }: Props) => {
+export const Select = ({ errorMessage = null, paises, onChange, value, ...rest }: Props) => {
 
     const invalid = !!errorMessage
 
@@ -21,6 +22,8 @@ export const Select = ({ errorMessage = null, paises, onChange, ...rest }: Props
         <FormControl w="full" maxW="full" isRequired isInvalid={invalid}>
 
             <SelectNB minWidth="200" bg='white' accessibilityLabel={language == 'english' ? "Choose Country" : "Escolha seu pais"} placeholder={language == 'english' ? "Choose Country" : "Escolha seu pais"} mt="1" borderColor={invalid ? 'red.600' : 'gray.100'} borderWidth={invalid ? 2 : 0}
+                // defaultValue={value}
+                selectedValue={value}
                 onValueChange={value => {
                     onChange(value)
                 }}

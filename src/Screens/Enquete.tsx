@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as React from 'react';
 import { useContext } from 'react';
@@ -10,86 +9,52 @@ import { Input } from '../Components/Input';
 import { Select } from '../Components/Select';
 import { LanguageContext } from '../Contexts/LanguageProvider';
 
-import { FormControl } from 'native-base';
+import LottieView from 'lottie-react-native';
+import { TFormDataProps, TPais } from '../@types/types';
 import { AlertSucess } from '../Components/Alert';
 import { RadioButtonTime } from '../Components/RadioButton';
 import { RadioButtonEmpregado } from '../Components/RadioButton/RaidioButtonEmpregado';
 import Paises from '../Data/paises';
+import useApi from '../Hooks/useApi';
 
-type TPerguntas = {
-    id: number,
-    perguntas_descri: string
-}
-
-type formDataProps = {
-    nome: string
-    pais_de_origem: string,
-    tempo_no_brasil: string,
-    esta_empregado: string,
-    dificuldade_imigrante: string,
-}
-
-export type TPais = {
-    gentilico: string,
-    nome_pais: string,
-    nome_pais_int: string,
-    sigla: string
-}
-
-export function useApi() {
-
-    const api = axios.create({
-        baseURL: 'https://restapitcc.herokuapp.com/api/v1/'
-    })
-
-    const username = 'lucas.valente'
-    const password = 'YTuNWNSN4GQ2xdp'
-
-    return ({
-
-        PostSurvey: async (data: formDataProps) => {
-            const response = await api.post('/respostas', data, {
-                auth: {
-                    username,
-                    password
-                }
-            })
-            return response.status
-        }
-
-    })
-}
+import Sending from '../assets/img/Sending.json';
 
 export function EnqueteScreen() {
 
-    const { control, handleSubmit, formState: { errors } } = useForm<formDataProps>()
+    const { control, handleSubmit, formState: { errors }, reset, getValues } = useForm<TFormDataProps>({
+        defaultValues: {
+            nome: '',
+            pais_de_origem: '',
+            tempo_no_brasil: '',
+            esta_empregado: '',
+            dificuldade_imigrante: '',
+        }
+    })
 
     const { texts, language } = useContext(LanguageContext)
 
-    const [perguntas, setPerguntas] = React.useState<TPerguntas[]>([])
-
     const [paises, setPaises] = React.useState<TPais[]>([])
 
-    const [isLoading, setIsLoading] = React.useState(true);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const [show, setShow] = React.useState(false);
 
     const api = useApi()
 
-    function getPais() {
-        setPaises(Paises)
-    }
+    function getPais() { setPaises(Paises) }
 
-    React.useEffect(() => {
-        getPais()
-    }, [])
+    React.useEffect(() => { getPais(), reset() }, [control])
 
+    async function onSubmit(data: TFormDataProps) {
 
-    async function handdleSubmit(data: formDataProps) {
+        setIsLoading(true)
         const dta = await api.PostSurvey(data)
+        setIsLoading(false)
 
         if (dta == 201) {
-            return setShow(true)
+            reset()
+            setShow(true)
+            setTimeout(() => (setShow(false)), 1000 * 2) // 2 segundos
         } else {
             return console.warn("Erro ao enviar formulario");
         }
@@ -103,97 +68,108 @@ export function EnqueteScreen() {
                 style={styles.linearGradient}>
 
                 <AlertSucess setShow={setShow} show={show} />
+                {isLoading ?
 
-                <Text style={styles.header}>{texts?.enquete?.header}</Text>
+                    <LottieView
+                        source={Sending}
+                        autoPlay={true}
+                        loop={true}
+                        style={{ flex: 1, position: 'absolute', top: '15%', justifyContent: 'center', alignItems: 'center', width: 350 }}
+                        autoSize={true}
+                        resizeMode='cover'
+                    /> :
+                    <>
+                        <Text style={styles.header}>{texts?.enquete?.header}</Text>
 
-                <ScrollView style={{ width: '100%' }}>
-                    <FormControl>
-                        <View style={styles.contentPerguntas}>
-                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p1} <Text style={styles.requered} >*</Text>  </Text>
-                            <Controller
-                                control={control}
-                                name='nome'
-                                rules={{
-                                    required: texts.enquete.mensagemDeErro.p1
-                                }}
-                                defaultValue=""
-                                render={({ field: { onChange } }) => (
-                                    <Input
-                                        errorMessage={errors.nome?.message}
-                                        onChangeText={onChange} />
-                                )}
-                            />
+                        <ScrollView style={{ width: '100%' }}>
 
-                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p2} <Text style={styles.requered} >*</Text> </Text>
-                            <Controller
-                                control={control}
-                                name='pais_de_origem'
-                                rules={{
-                                    required: texts.enquete.mensagemDeErro.p2
-                                }}
-                                defaultValue=""
-                                render={({ field: { onChange } }) => (
-                                    <Select paises={paises} onChange={onChange} errorMessage={errors.pais_de_origem?.message} />
-                                )}
-                            />
+                            <View style={styles.contentPerguntas}>
+                                <Text style={styles.peguntas}>{texts.enquete.perguntas.p1} <Text style={styles.requered} >*</Text>  </Text>
+                                <Controller
+                                    control={control}
+                                    name='nome'
+                                    rules={{
+                                        required: texts.enquete.mensagemDeErro.p1
+                                    }}
 
-                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p3} <Text style={styles.requered} >*</Text> </Text>
-                            <Controller
-                                control={control}
-                                name='tempo_no_brasil'
-                                rules={{
-                                    required: 'Informe o tempo'
-                                }}
-                                render={({ field: { onChange } }) => (
+                                    render={({ field: { onChange } }) => (
+                                        <Input
+                                            value={getValues().nome}
+                                            errorMessage={errors.nome?.message}
+                                            onChangeText={onChange} />
+                                    )}
+                                />
 
-                                    <RadioButtonTime errorMessage={errors.tempo_no_brasil?.message} onChange={onChange} />
-                                )}
-                            />
+                                <Text style={styles.peguntas}>{texts.enquete.perguntas.p2} <Text style={styles.requered} >*</Text> </Text>
+                                <Controller
+                                    control={control}
+                                    name='pais_de_origem'
+                                    rules={{
+                                        required: texts.enquete.mensagemDeErro.p2
+                                    }}
+                                    render={({ field: { onChange } }) => (
+                                        <Select paises={paises} onChange={onChange} errorMessage={errors.pais_de_origem?.message} value={getValues().pais_de_origem} />
+                                    )}
+                                />
 
-                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p4} <Text style={styles.requered} >*</Text> </Text>
-                            <Controller
-                                control={control}
-                                name='esta_empregado'
-                                rules={{
-                                    required: 'Selecione uma opção'
-                                }}
-                                render={({ field: { onChange } }) => (
-                                    <RadioButtonEmpregado errorMessage={errors.esta_empregado?.message} onChange={onChange} />
-                                )}
-                            />
+                                <Text style={styles.peguntas}>{texts.enquete.perguntas.p3} <Text style={styles.requered} >*</Text> </Text>
+                                <Controller
+                                    control={control}
+                                    name='tempo_no_brasil'
+                                    rules={{
+                                        required: 'Informe o tempo'
+                                    }}
+                                    render={({ field: { onChange } }) => (
 
-                            <Text style={styles.peguntas}>{texts.enquete.perguntas.p5} <Text style={styles.requered} >*</Text> </Text>
-                            <Controller
-                                control={control}
-                                name='dificuldade_imigrante'
-                                rules={{
-                                    required: texts.enquete.mensagemDeErro.p5
-                                }}
-                                defaultValue=""
-                                render={({ field: { onChange } }) => (
-                                    <Input
-                                        h={100}
-                                        errorMessage={errors.dificuldade_imigrante?.message}
-                                        onChangeText={onChange} />
-                                )}
-                            />
+                                        <RadioButtonTime errorMessage={errors.tempo_no_brasil?.message} onChange={onChange} value={getValues().tempo_no_brasil} />
+                                    )}
+                                />
 
-                        </View>
+                                <Text style={styles.peguntas}>{texts.enquete.perguntas.p4} <Text style={styles.requered} >*</Text> </Text>
+                                <Controller
+                                    control={control}
+                                    name='esta_empregado'
+                                    rules={{
+                                        required: 'Selecione uma opção'
+                                    }}
+                                    render={({ field: { onChange } }) => (
+                                        <RadioButtonEmpregado errorMessage={errors.esta_empregado?.message} onChange={onChange} value={getValues().esta_empregado} />
+                                    )}
+                                />
 
-                        <View style={styles.contentButton}>
+                                <Text style={styles.peguntas}>{texts.enquete.perguntas.p5} <Text style={styles.requered} >*</Text> </Text>
+                                <Controller
+                                    control={control}
+                                    name='dificuldade_imigrante'
+                                    rules={{
+                                        required: texts.enquete.mensagemDeErro.p5
+                                    }}
+                                    render={({ field: { onChange } }) => (
+                                        <Input
+                                            value={getValues().dificuldade_imigrante}
+                                            h={100}
+                                            errorMessage={errors.dificuldade_imigrante?.message}
+                                            onChangeText={onChange} />
+                                    )}
+                                />
 
-                            <TouchableOpacity
-                                activeOpacity={0.7}
-                                style={styles.button}
-                                onPress={handleSubmit(handdleSubmit)}
-                            >
-                                {language == 'english' ? <ButtonSVGEng /> : <ButtonSVG />}
-                            </TouchableOpacity>
+                            </View>
 
-                        </View>
-                    </FormControl>
-                </ScrollView>
+                            <View style={styles.contentButton}>
 
+                                <TouchableOpacity
+                                    activeOpacity={0.7}
+                                    style={styles.button}
+                                    onPress={handleSubmit(onSubmit)}
+                                >
+                                    {language == 'english' ? <ButtonSVGEng /> : <ButtonSVG />}
+                                </TouchableOpacity>
+
+                            </View>
+
+                        </ScrollView>
+                    </>
+                }
             </LinearGradient>
         </View>
     )

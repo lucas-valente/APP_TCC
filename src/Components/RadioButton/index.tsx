@@ -7,9 +7,10 @@ type Props = {
     errorMessage?: string | null
     isInvalid?: boolean
     onChange: Function
+    value: string
 }
 
-export const RadioButtonTime = ({ errorMessage, onChange }: Props) => {
+export const RadioButtonTime = ({ errorMessage, onChange, value }: Props) => {
 
     const invalid = !!errorMessage
     const { texts, language } = React.useContext(LanguageContext)
@@ -19,6 +20,8 @@ export const RadioButtonTime = ({ errorMessage, onChange }: Props) => {
         <View style={styles.radioButton} >
             <FormControl isRequired isInvalid={invalid} >
                 <Radio.Group name="tempoBrasil" accessibilityLabel="Há quanto tempos esta no Brasil"
+                    // value={value}
+                    defaultValue={value}
                     onChange={value => {
                         onChange(value)
                     }}>

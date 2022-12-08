@@ -1,4 +1,3 @@
-import axios from 'axios';
 import LottieView from 'lottie-react-native';
 import * as React from 'react';
 import { useContext, useState } from 'react';
@@ -7,31 +6,8 @@ import { TPost } from '../../@types/types';
 
 import loading from '../../assets/img/loading2.json';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
+import useApi from '../../Hooks/useApi';
 import { ModalPosts } from '../ModalPosts';
-
-export function useApi() {
-
-    const api = axios.create({
-        baseURL: 'https://restapitcc.herokuapp.com/api/v1/'
-    })
-
-    const username = 'lucas.valente'
-    const password = 'YTuNWNSN4GQ2xdp'
-
-    return ({
-
-        GetPosts: async () => {
-            const response = await api.get('/posts', {
-                auth: {
-                    username,
-                    password
-                }
-            })
-            return response.data
-        }
-
-    })
-}
 
 export function CardPosts() {
 
@@ -46,6 +22,12 @@ export function CardPosts() {
     const [idiomaFilter, setidiomaFilter] = useState<number>(1);
 
     const [refreshing, setRefreshing] = useState(false);
+
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const [post, setPost] = useState<TPost>();
+
+    React.useEffect(() => { fetchOut() }, [language, idiomaFilter])
 
     async function fetchOut() {
 
@@ -98,12 +80,6 @@ export function CardPosts() {
             console.warn(error)
         }
     }
-
-    React.useEffect(() => { fetchOut() }, [language, idiomaFilter])
-
-    const [modalVisible, setModalVisible] = useState(false);
-
-    const [post, setPost] = useState<TPost>();
 
     function handleModal(setpost: TPost) {
         setModalVisible(!modalVisible)
