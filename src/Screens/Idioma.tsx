@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import IconArrowBack from '../assets/img/arrowBack.svg';
 
 import BrasilIcon from '../assets/img/IconBrasil.png';
 import UsaIcon from '../assets/img/IconUsa.png';
@@ -50,7 +49,7 @@ export function ModalIdiomaScreen() {
             >
                 <ScrollView style={{ width: '100%' }}>
 
-                    <View style={{ padding: 3 }}>
+                    {/* <View style={{ padding: 3 }}>
                         <TouchableOpacity
                             activeOpacity={0.7}
                             onPress={openScreen}
@@ -63,7 +62,7 @@ export function ModalIdiomaScreen() {
                             </View>
 
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
 
                     <View style={styles.content}>
 
@@ -119,7 +118,8 @@ const styles = StyleSheet.create({
     },
     linearGradient: {
         flex: 1,
-        width: '100%'
+        width: '100%',
+        paddingVertical: 15
     },
     touchableOpacityStyle: {
         margin: 3

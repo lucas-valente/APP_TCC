@@ -29,6 +29,13 @@ export const TextsPortuguese = {
     posts: {
         header: 'Posts'
     },
+    ajuda: {
+        header: 'Ajuda',
+        titulo: 'Entre em contato com nossa ONG',
+        telefone: 'Telefone: (41) 3224-1979',
+        email: 'Email: ceim@seju.pr.gov.br',
+        link: 'Acesse aqui nosso manual de usuario'
+    },
     tabBarLabel: {
         home: {
             header: 'HOME'
@@ -39,6 +46,9 @@ export const TextsPortuguese = {
         },
         idioma: {
             header: 'IDIOMA'
+        },
+        ajuda: {
+            header: 'AJUDA'
         },
     }
 }
@@ -69,6 +79,13 @@ export const TextsEnglish = {
     posts: {
         header: 'Posts'
     },
+    ajuda: {
+        header: 'Help',
+        titulo: 'Contact us',
+        telefone: 'Phone number: (41) 3224-1979',
+        email: 'Email: ceim@seju.pr.gov.br',
+        link: 'Click here acess the Users\'s Manual'
+    },
     tabBarLabel: {
         home: {
             header: 'HOME'
@@ -78,6 +95,9 @@ export const TextsEnglish = {
         },
         idioma: {
             header: 'LANGUAGE'
+        },
+        ajuda: {
+            header: 'HELP'
         },
     }
 }

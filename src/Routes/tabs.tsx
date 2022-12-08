@@ -7,10 +7,12 @@ import { ModalIdiomaScreen } from '../Screens/Idioma';
 
 
 import IconEnquete from '../assets/img/enquete.svg';
+import IconAjuda from '../assets/img/helpIcon.svg';
 import IconHome from '../assets/img/home.svg';
 import IconIdioma from '../assets/img/Idioma.svg';
 
 import { LanguageContext } from '../Contexts/LanguageProvider';
+import { AjudaScreen } from '../Screens/Ajuda';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +32,9 @@ export function TabRoute() {
 
             <Tab.Screen name='ENQUETE' component={EnqueteScreen} options={{ tabBarIcon: ({ focused }) => <IconEnquete color='#104949' opacity={focused ? 1 : 0.7} width={focused ? 30 : 20} height={focused ? 30 : 30} />, tabBarLabel: texts?.tabBarLabel?.enquete?.header || 'ENQUETE' }} />
 
-            <Tab.Screen name="IDIOMA" component={ModalIdiomaScreen} options={{ tabBarIcon: ({ focused }) => <IconIdioma opacity={focused ? 1 : 0.7} width={focused ? 30 : 25} height={focused ? 30 : 25} />, tabBarStyle: { display: 'none' }, tabBarLabel: texts?.tabBarLabel?.idioma?.header || 'IDIOMA' }} />
+            <Tab.Screen name="IDIOMA" component={ModalIdiomaScreen} options={{ tabBarIcon: ({ focused }) => <IconIdioma opacity={focused ? 1 : 0.7} width={focused ? 30 : 25} height={focused ? 30 : 25} />, tabBarLabel: texts?.tabBarLabel?.idioma?.header || 'IDIOMA' }} />
+
+            <Tab.Screen name="AJUDA" component={AjudaScreen} options={{ tabBarIcon: ({ focused }) => <IconAjuda opacity={focused ? 1 : 0.7} width={focused ? 30 : 25} height={focused ? 30 : 25} />, tabBarLabel: texts?.tabBarLabel?.ajuda?.header || 'AJUDA' }} />
 
         </Tab.Navigator>
     );
