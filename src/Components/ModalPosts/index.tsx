@@ -1,7 +1,7 @@
 import { Image } from 'native-base';
 import * as React from 'react';
 import { useContext } from 'react';
-import { Linking, Modal, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import IconArrowBack from '../../assets/img/arrowBack.svg';
 import Map from '../../assets/img/map.png';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
@@ -33,54 +33,54 @@ export function ModalPosts({ setModalVisible, modalVisible, post }: props) {
                     setModalVisible(!modalVisible);
                 }}
             >
-                <View style={styles.centeredView}>
+                <ScrollView style={{ width: '100%' }}>
+                    <View style={styles.centeredView}>
 
-                    <View>
-
-                        <TouchableOpacity
-                            activeOpacity={0.7}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            <View style={styles.touchableOpacityStyle}>
-
-                                <IconArrowBack
-                                    width={25}
-                                    height={25}
-                                />
-
-                            </View>
-
-                        </TouchableOpacity>
-
-                    </View>
-
-                    <View style={styles.modalView}>
-
-                        <Text style={styles.modalTextTitle}>{post?.post_titulo}</Text>
-
-                        <Text style={styles.modalTextBody}>{post?.post_conteudo}</Text>
-
-                        <View style={post?.link == '' || post?.link == 'http://semLink.com' ? { display: 'none' } : styles.map}>
-
-                            <View style={styles.mapTextContent}>
-                                <Text style={styles.TextTitleMap}>{texts.enquete.mapText.title}</Text>
-                                <Text style={styles.TextSubTitleMap}>{texts.enquete.mapText.subTitle}</Text>
-                            </View>
+                        <View>
 
                             <TouchableOpacity
                                 activeOpacity={0.7}
-                                onPress={() => { Linking.openURL(post?.link!); }}
+                                onPress={() => setModalVisible(!modalVisible)}
                             >
-                                <Image source={Map} alt='Map' style={styles.mapImg} />
+                                <View style={styles.touchableOpacityStyle}>
+
+                                    <IconArrowBack
+                                        width={25}
+                                        height={25}
+                                    />
+
+                                </View>
 
                             </TouchableOpacity>
 
                         </View>
+                        <View style={styles.modalView}>
+
+                            <Text style={styles.modalTextTitle}>{post?.post_titulo}</Text>
+
+                            <Text style={styles.modalTextBody}>{post?.post_conteudo}</Text>
+
+                            <View style={post?.link == '' || post?.link == 'http://semLink.com' ? { display: 'none' } : styles.map}>
+
+                                <View style={styles.mapTextContent}>
+                                    <Text style={styles.TextTitleMap}>{texts.enquete.mapText.title}</Text>
+                                    <Text style={styles.TextSubTitleMap}>{texts.enquete.mapText.subTitle}</Text>
+                                </View>
+
+                                <TouchableOpacity
+                                    activeOpacity={0.7}
+                                    onPress={() => { Linking.openURL(post?.link!); }}
+                                >
+                                    <Image source={Map} alt='Map' style={styles.mapImg} />
+
+                                </TouchableOpacity>
+                            </View>
+
+
+                        </View>
 
                     </View>
-
-                </View>
-
+                </ScrollView>
             </Modal>
 
         </>
@@ -101,8 +101,9 @@ const styles = StyleSheet.create({
     modalTextBody: {
         marginBottom: 15,
         fontSize: 16,
-        paddingHorizontal: 3,
-        textAlign: 'left'
+        paddingHorizontal: 10,
+        textAlign: 'left',
+        paddingBottom: 300
     },
     modalTextTitle: {
         marginBottom: 15,
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     },
     map: {
         position: 'absolute',
-        bottom: "5.5%",
+        bottom: "3.5%",
         width: '100%',
         alignItems: "center",
         justifyContent: 'center',

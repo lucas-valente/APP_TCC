@@ -2,7 +2,7 @@ import axios from 'axios';
 import LottieView from 'lottie-react-native';
 import * as React from 'react';
 import { useContext, useState } from 'react';
-import { FlatList, ImageBackground, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import loading from '../../assets/img/loading2.json';
 import { LanguageContext } from '../../Contexts/LanguageProvider';
@@ -61,43 +61,71 @@ export function CardPosts() {
 
     const [refreshing, setRefreshing] = useState(false);
 
-    async function fetch() {
+    // async function fetchOut() {
 
-        switch (language) {
-            case 'english':
-                setidiomaFilter(2)
-                break;
+    //     switch (language) {
+    //         case 'english':
+    //             setidiomaFilter(2)
+    //             break;
 
-            case 'portuguese':
-                setidiomaFilter(1)
-                break;
-        }
+    //         case 'portuguese':
+    //             setidiomaFilter(1)
+    //             break;
+    //     }
 
-        try {
 
-            const getPosts: TPost[] = await api.GetPosts()
-            setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
-            setIsLoading(false)
-            setRefreshing(false)
+    //     try {
 
-        } catch (error) {
-            console.warn(error)
-        }
-    }
+    //         const getPosts: TPost[] = await api.GetPosts()
+    //         setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
+    //         setIsLoading(false)
+    //         setRefreshing(false)
+
+    //     } catch (error) {
+    //         console.warn(error)
+    //     }
+    // }
 
     React.useEffect(() => {
 
-        switch (language) {
-            case 'english':
-                setidiomaFilter(1)
-                break;
+        // switch (language) {
+        //     case 'english':
+        //         setidiomaFilter(1)
+        //         break;
 
-            case 'portuguese':
-                setidiomaFilter(2)
-                break;
+        //     case 'portuguese':
+        //         setidiomaFilter(2)
+        //         break;
+        // }
+
+        async function fetch() {
+
+            switch (language) {
+                case 'english':
+                    setidiomaFilter(1)
+                    break;
+
+                case 'portuguese':
+                    setidiomaFilter(2)
+                    break;
+            }
+
+
+            try {
+
+                const getPosts: TPost[] = await api.GetPosts()
+                setPosts(getPosts.filter(post => (idiomaFilter == null ? post.idioma == 1 : post.idioma == idiomaFilter)))
+                setIsLoading(false)
+                setRefreshing(false)
+
+            } catch (error) {
+                console.warn(error)
+            }
         }
 
+
         fetch()
+
 
     }, [language])
 
@@ -141,7 +169,7 @@ export function CardPosts() {
     const onRefresh = () => {
         setRefreshing(true);
         setIsLoading(true)
-        fetch();
+        // fetchOut();
     };
 
     return (
@@ -171,12 +199,12 @@ export function CardPosts() {
                             data={posts}
                             keyExtractor={({ id: key }) => key.toString()}
                             renderItem={_renderItem}
-                            refreshControl={
-                                <RefreshControl
-                                    refreshing={refreshing}
-                                    onRefresh={onRefresh}
-                                />
-                            }
+                        // refreshControl={
+                        //     <RefreshControl
+                        //         refreshing={refreshing}
+                        //         onRefresh={onRefresh}
+                        //     />
+                        // }
                         />
             }
         </View >

@@ -16,10 +16,10 @@ const Tab = createBottomTabNavigator();
 
 export function TabRoute() {
 
-    const { texts, toggleLanguageP } = useContext(LanguageContext)
+    const { texts, toggleLanguagePortuguese } = useContext(LanguageContext)
 
     useEffect(() => {
-        return toggleLanguageP()
+        return toggleLanguagePortuguese()
     }, [])
 
 

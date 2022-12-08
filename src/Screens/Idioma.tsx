@@ -11,15 +11,35 @@ import UsaIcon from '../assets/img/IconUsa.png';
 import Logo2 from '../assets/img/lg2.png';
 
 import { LanguageContext } from '../Contexts/LanguageProvider';
+import { languages } from '../Data/idiomas';
 
 export function ModalIdiomaScreen() {
 
-    const { language, toggleLanguageP, toggleLanguageI } = useContext(LanguageContext)
+    const { language, toggleLanguagePortuguese, toggleLanguageEnglish } = useContext(LanguageContext)
 
     const navigation = useNavigation()
 
     function openScreen() {
         navigation.navigate('HOME')
+    }
+
+    function idiomas() {
+        for (let i = 0; i < Object.keys(languages).length; i++) {
+            console.warn(Object.keys(languages).length)
+            return (
+                <TouchableOpacity
+                    activeOpacity={0.7}
+                    style={styles.touchableOpacityStyle}
+                    onPress={toggleLanguagePortuguese}
+                >
+                    <View style={styles.img}>
+                        <Image source={UsaIcon} style={{ marginBottom: 30 }} />
+                        <Text style={styles.TextDesc}>PORTUGUESE</Text>
+                    </View>
+                </TouchableOpacity>
+            )
+
+        }
     }
 
     return (
@@ -57,7 +77,7 @@ export function ModalIdiomaScreen() {
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 style={styles.touchableOpacityStyle}
-                                onPress={toggleLanguageI}
+                                onPress={toggleLanguageEnglish}
                             >
                                 <View style={styles.img}>
                                     <Image source={UsaIcon} style={{ marginBottom: 30 }} />
@@ -68,13 +88,17 @@ export function ModalIdiomaScreen() {
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 style={styles.touchableOpacityStyle}
-                                onPress={toggleLanguageP}
+                                onPress={toggleLanguagePortuguese}
                             >
                                 <View style={styles.img}>
                                     <Image source={BrasilIcon} style={{ marginBottom: 30 }} />
                                     <Text style={styles.TextDesc}>PORTUGUESE</Text>
                                 </View>
                             </TouchableOpacity>
+
+                            {
+                                idiomas()
+                            }
 
                         </View>
                         <Text style={styles.TextDesc}>{language}</Text>
