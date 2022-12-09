@@ -23,23 +23,28 @@ export const AjudaScreen = () => {
                 <ScrollView style={{ width: '100%' }}>
 
                     <View style={{ alignItems: 'center', marginTop: '10%' }}>
+
                         <Text style={styles.titulo}> {texts.ajuda.titulo} </Text>
                         <Text style={styles.telefone}> {texts.ajuda.telefone} </Text>
                         <Text style={styles.email}> {texts.ajuda.email} </Text>
+
                         <TouchableOpacity
                             activeOpacity={0.7}
-                            onPress={() => { Linking.openURL('https://raw.githubusercontent.com/lucas-valente/APP_TCC/main/IMG-20221208-WA0056.jpg?token=GHSAT0AAAAAAB3LQL4TSN6I4VI76C4DN47KY4SIUDA'); }}
+                            onPress={() => { Linking.openURL('https://github.com/lucas-valente/ED_Mobile/blob/main/manual.jpg?raw=true'); }}
                         >
                             <Text style={styles.link}> {texts.ajuda.link} </Text>
 
                         </TouchableOpacity>
+
                     </View>
 
                     <View style={styles.map}>
 
                         <View style={styles.mapTextContent}>
+
                             <Text style={styles.TextTitleMap}>{texts.enquete.mapText.title}</Text>
                             <Text style={styles.TextSubTitleMap}>{texts.enquete.mapText.subTitle}</Text>
+
                         </View>
 
                         <TouchableOpacity
@@ -49,6 +54,7 @@ export const AjudaScreen = () => {
                             <Image source={Map} alt='Map' style={styles.mapImg} />
 
                         </TouchableOpacity>
+
                     </View>
 
                 </ScrollView>
