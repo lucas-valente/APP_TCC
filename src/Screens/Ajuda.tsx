@@ -1,14 +1,14 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'native-base';
 import { useContext } from 'react';
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LanguageContext } from '../Contexts/LanguageProvider';
 
 import Map from '../assets/img/map.png';
 
 export const AjudaScreen = () => {
 
-    const { texts, toggleLanguagePortuguese } = useContext(LanguageContext)
+    const { texts } = useContext(LanguageContext)
 
     return (
         <LinearGradient
@@ -19,38 +19,41 @@ export const AjudaScreen = () => {
 
                 <Text style={styles.header}>{texts?.ajuda?.header}</Text>
 
-                <View style={{ alignItems: 'center', marginTop: '10%' }}>
-                    <Text style={styles.titulo}> {texts.ajuda.titulo} </Text>
-                    <Text style={styles.telefone}> {texts.ajuda.telefone} </Text>
-                    <Text style={styles.email}> {texts.ajuda.email} </Text>
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={() => { Linking.openURL('https://raw.githubusercontent.com/lucas-valente/APP_TCC/main/IMG-20221208-WA0056.jpg?token=GHSAT0AAAAAAB3LQL4TSN6I4VI76C4DN47KY4SIUDA'); }}
-                    >
-                        <Text style={styles.link}> {texts.ajuda.link} </Text>
+                <ScrollView style={{ width: '100%' }}>
 
-                    </TouchableOpacity>
-                </View>
+                    <View style={{ alignItems: 'center', marginTop: '10%' }}>
+                        <Text style={styles.titulo}> {texts.ajuda.titulo} </Text>
+                        <Text style={styles.telefone}> {texts.ajuda.telefone} </Text>
+                        <Text style={styles.email}> {texts.ajuda.email} </Text>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            onPress={() => { Linking.openURL('https://raw.githubusercontent.com/lucas-valente/APP_TCC/main/IMG-20221208-WA0056.jpg?token=GHSAT0AAAAAAB3LQL4TSN6I4VI76C4DN47KY4SIUDA'); }}
+                        >
+                            <Text style={styles.link}> {texts.ajuda.link} </Text>
 
-                <View style={styles.map}>
-
-                    <View style={styles.mapTextContent}>
-                        <Text style={styles.TextTitleMap}>{texts.enquete.mapText.title}</Text>
-                        <Text style={styles.TextSubTitleMap}>{texts.enquete.mapText.subTitle}</Text>
+                        </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={() => { Linking.openURL('https://www.google.com.br/maps/place/R.+Des.+Westphalen,+15+-+13%C2%BA+andar+-+Centro,+Curitiba+-+PR,+80010-110/@-25.4329612,-49.2747341,17z/data=!3m1!4b1!4m5!3m4!1s0x94dce46d0d96bfbb:0x8a10693cf4f8fe2!8m2!3d-25.4329661!4d-49.2725454'); }}
-                    >
-                        <Image source={Map} alt='Map' style={styles.mapImg} />
+                    <View style={styles.map}>
 
-                    </TouchableOpacity>
+                        <View style={styles.mapTextContent}>
+                            <Text style={styles.TextTitleMap}>{texts.enquete.mapText.title}</Text>
+                            <Text style={styles.TextSubTitleMap}>{texts.enquete.mapText.subTitle}</Text>
+                        </View>
 
-                </View>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            onPress={() => { Linking.openURL('https://www.google.com.br/maps/place/R.+Des.+Westphalen,+15+-+13%C2%BA+andar+-+Centro,+Curitiba+-+PR,+80010-110/@-25.4329612,-49.2747341,17z/data=!3m1!4b1!4m5!3m4!1s0x94dce46d0d96bfbb:0x8a10693cf4f8fe2!8m2!3d-25.4329661!4d-49.2725454'); }}
+                        >
+                            <Image source={Map} alt='Map' style={styles.mapImg} />
+
+                        </TouchableOpacity>
+                    </View>
+
+                </ScrollView>
 
             </View>
-        </LinearGradient>
+        </LinearGradient >
     )
 }
 

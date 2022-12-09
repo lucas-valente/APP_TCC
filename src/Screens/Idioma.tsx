@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as React from 'react';
 import { useContext } from 'react';
@@ -14,32 +13,7 @@ import { languages } from '../Data/idiomas';
 
 export function ModalIdiomaScreen() {
 
-    const { language, toggleLanguagePortuguese, toggleLanguageEnglish, setLanguage, toggleLanguage } = useContext(LanguageContext)
-
-    const navigation = useNavigation()
-
-    function openScreen() {
-        navigation.navigate('HOME')
-    }
-
-    function idiomas() {
-        for (let i = 0; i < Object.keys(languages).length; i++) {
-            console.warn(Object.keys(languages).length)
-            return (
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={styles.touchableOpacityStyle}
-                    onPress={() => (setLanguage('portuguese'), toggleLanguagePortuguese)}
-                >
-                    <View style={styles.img}>
-                        <Image source={UsaIcon} style={{ marginBottom: 30 }} />
-                        <Text style={styles.TextDesc}>PORTUGUESE</Text>
-                    </View>
-                </TouchableOpacity>
-            )
-
-        }
-    }
+    const { language, setLanguage, toggleLanguage } = useContext(LanguageContext)
 
     return (
         <View style={styles.container}>
@@ -48,21 +22,6 @@ export function ModalIdiomaScreen() {
                 style={styles.linearGradient}
             >
                 <ScrollView style={{ width: '100%' }}>
-
-                    {/* <View style={{ padding: 3 }}>
-                        <TouchableOpacity
-                            activeOpacity={0.7}
-                            onPress={openScreen}
-                        >
-                            <View style={styles.touchableOpacityStyle}>
-                                <IconArrowBack
-                                    width={25}
-                                    height={25}
-                                />
-                            </View>
-
-                        </TouchableOpacity>
-                    </View> */}
 
                     <View style={styles.content}>
 
@@ -77,31 +36,27 @@ export function ModalIdiomaScreen() {
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 style={styles.touchableOpacityStyle}
-                                onPress={() => (setLanguage('english'), toggleLanguageEnglish())}
+                                onPress={() => (toggleLanguage(languages.enUs))}
                             >
                                 <View style={styles.img}>
                                     <Image source={UsaIcon} style={{ marginBottom: 30 }} />
-                                    <Text style={styles.TextDesc}>ENGLISH</Text>
+                                    <Text style={styles.TextDesc}>{languages.enUs.toUpperCase()}</Text>
                                 </View>
                             </TouchableOpacity>
 
                             <TouchableOpacity
                                 activeOpacity={0.7}
                                 style={styles.touchableOpacityStyle}
-                                onPress={() => (setLanguage('portuguese'), toggleLanguagePortuguese())}
+                                onPress={() => (toggleLanguage(languages.ptBr))}
                             >
                                 <View style={styles.img}>
                                     <Image source={BrasilIcon} style={{ marginBottom: 30 }} />
-                                    <Text style={styles.TextDesc}>PORTUGUESE</Text>
+                                    <Text style={styles.TextDesc}>{languages.ptBr.toUpperCase()}</Text>
                                 </View>
                             </TouchableOpacity>
 
-                            {/* {
-                                idiomas()
-                            } */}
-
                         </View>
-                        <Text style={styles.TextDesc}>{language}</Text>
+                        <Text style={styles.language}>{language}</Text>
 
                     </View>
                 </ScrollView>
@@ -149,5 +104,11 @@ const styles = StyleSheet.create({
     },
     img: {
         alignItems: 'center',
-    }
+    },
+    language: {
+        color: 'white',
+        fontSize: 30,
+        fontFamily: 'Overlock_400Regular',
+        marginTop: 5
+    },
 })

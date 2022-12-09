@@ -33,7 +33,7 @@ export const RadioButtonEmpregado = ({ errorMessage, onChange, value }: Props) =
                     </Radio>
                 </Radio.Group>
                 <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                    {language == 'english' ? 'Select an option' : 'Selecione uma opção'}
+                    {texts.enquete.mensagemDeErro.selection}
                 </FormControl.ErrorMessage>
             </FormControl>
         </View>

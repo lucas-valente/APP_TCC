@@ -54,7 +54,7 @@ export function EnqueteScreen() {
         if (dta == 201) {
             reset()
             setShow(true)
-            setTimeout(() => (setShow(false)), 1000 * 2) // 2 segundos
+            setTimeout(() => (setShow(false)), 1000 * 3) // 3 segundos
         } else {
             return console.warn("Erro ao enviar formulario");
         }
@@ -89,7 +89,7 @@ export function EnqueteScreen() {
                                     control={control}
                                     name='nome'
                                     rules={{
-                                        required: texts.enquete.mensagemDeErro.p1
+                                        required: texts.enquete.mensagemDeErro.input
                                     }}
 
                                     render={({ field: { onChange } }) => (
@@ -105,10 +105,14 @@ export function EnqueteScreen() {
                                     control={control}
                                     name='pais_de_origem'
                                     rules={{
-                                        required: texts.enquete.mensagemDeErro.p2
+                                        required: texts.enquete.mensagemDeErro.selection
                                     }}
                                     render={({ field: { onChange } }) => (
-                                        <Select paises={paises} onChange={onChange} errorMessage={errors.pais_de_origem?.message} value={getValues().pais_de_origem} />
+                                        <Select
+                                            paises={paises}
+                                            onChange={onChange}
+                                            errorMessage={errors.pais_de_origem?.message}
+                                            value={getValues().pais_de_origem} />
                                     )}
                                 />
 
@@ -117,11 +121,13 @@ export function EnqueteScreen() {
                                     control={control}
                                     name='tempo_no_brasil'
                                     rules={{
-                                        required: 'Informe o tempo'
+                                        required: texts.enquete.mensagemDeErro.selection
                                     }}
                                     render={({ field: { onChange } }) => (
-
-                                        <RadioButtonTime errorMessage={errors.tempo_no_brasil?.message} onChange={onChange} value={getValues().tempo_no_brasil} />
+                                        <RadioButtonTime
+                                            errorMessage={errors.tempo_no_brasil?.message}
+                                            onChange={onChange}
+                                            value={getValues().tempo_no_brasil} />
                                     )}
                                 />
 
@@ -130,10 +136,13 @@ export function EnqueteScreen() {
                                     control={control}
                                     name='esta_empregado'
                                     rules={{
-                                        required: 'Selecione uma opção'
+                                        required: texts.enquete.mensagemDeErro.selection
                                     }}
                                     render={({ field: { onChange } }) => (
-                                        <RadioButtonEmpregado errorMessage={errors.esta_empregado?.message} onChange={onChange} value={getValues().esta_empregado} />
+                                        <RadioButtonEmpregado
+                                            errorMessage={errors.esta_empregado?.message}
+                                            onChange={onChange}
+                                            value={getValues().esta_empregado} />
                                     )}
                                 />
 
@@ -142,7 +151,7 @@ export function EnqueteScreen() {
                                     control={control}
                                     name='dificuldade_imigrante'
                                     rules={{
-                                        required: texts.enquete.mensagemDeErro.p5
+                                        required: texts.enquete.mensagemDeErro.input
                                     }}
                                     render={({ field: { onChange } }) => (
                                         <Input

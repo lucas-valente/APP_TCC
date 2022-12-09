@@ -22,7 +22,6 @@ export const Select = ({ errorMessage = null, paises, onChange, value, ...rest }
         <FormControl w="full" maxW="full" isRequired isInvalid={invalid}>
 
             <SelectNB minWidth="200" bg='white' accessibilityLabel={language == 'english' ? "Choose Country" : "Escolha seu pais"} placeholder={language == 'english' ? "Choose Country" : "Escolha seu pais"} mt="1" borderColor={invalid ? 'red.600' : 'gray.100'} borderWidth={invalid ? 2 : 0}
-                // defaultValue={value}
                 selectedValue={value}
                 onValueChange={value => {
                     onChange(value)
@@ -39,7 +38,8 @@ export const Select = ({ errorMessage = null, paises, onChange, value, ...rest }
             </SelectNB>
 
             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                {language == 'english' ? 'Required field!' : 'Campo obrigatório!'}
+                {/* {language == 'english' ? 'Required field!' : 'Campo obrigatório!'} */}
+                {texts.enquete.mensagemDeErro.selection}
             </FormControl.ErrorMessage>
 
         </FormControl>

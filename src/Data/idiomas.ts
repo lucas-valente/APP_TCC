@@ -17,9 +17,8 @@ export const TextsPortuguese = {
             p5: 'Qual é a maior dificuldade enfrentada como imigrante ?',
         },
         mensagemDeErro: {
-            p1: 'Informe o nome',
-            p2: 'Informe o pais',
-            p5: 'Informe a descrição',
+            input: 'Campo obrigatório!',
+            selection: 'Selecione uma opção!',
         },
         mapText: {
             title: 'Como Chegar !',
@@ -67,9 +66,8 @@ export const TextsEnglish = {
             p5: 'What is the greatest difficulty have you faced as an immigrant ?',
         },
         mensagemDeErro: {
-            p1: 'Inform the name',
-            p2: 'Inform the coutry',
-            p5: 'Inform the description',
+            input: 'Required field!',
+            selection: 'Select an option!',
         },
         mapText: {
             title: 'How to Get There !',
