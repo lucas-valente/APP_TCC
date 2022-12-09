@@ -2,6 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'native-base';
 import { useContext } from 'react';
 import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import { LanguageContext } from '../Contexts/LanguageProvider';
 
 import Map from '../assets/img/map.png';

@@ -1,10 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
+
+import { AjudaScreen } from '../Screens/Ajuda';
 import { EnqueteScreen } from '../Screens/Enquete';
 import { HomeScreen } from '../Screens/Home';
 import { ModalIdiomaScreen } from '../Screens/Idioma';
-
 
 import IconEnquete from '../assets/img/enquete.svg';
 import IconAjuda from '../assets/img/helpIcon.svg';
@@ -12,7 +13,6 @@ import IconHome from '../assets/img/home.svg';
 import IconIdioma from '../assets/img/Idioma.svg';
 
 import { LanguageContext } from '../Contexts/LanguageProvider';
-import { AjudaScreen } from '../Screens/Ajuda';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,9 +21,8 @@ export function TabRoute() {
     const { texts, toggleLanguage } = useContext(LanguageContext)
 
     useEffect(() => {
-        return toggleLanguage()
+        return toggleLanguage()// configura o idioma padrão
     }, [])
-
 
     return (
         <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: 'black', tabBarInactiveTintColor: 'rgba(0, 0, 0, 0.6)', tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' }, tabBarStyle: { backgroundColor: '#f1f1f1' } }}>

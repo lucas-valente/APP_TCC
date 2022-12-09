@@ -1,23 +1,23 @@
 import { LinearGradient } from 'expo-linear-gradient';
+import LottieView from 'lottie-react-native';
 import * as React from 'react';
 import { useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import ButtonSVG from '../assets/img/buttonSurvey.svg';
-import ButtonSVGEng from '../assets/img/ButtonSVGEng.svg';
-import { Input } from '../Components/Input';
-import { Select } from '../Components/Select';
-import { LanguageContext } from '../Contexts/LanguageProvider';
-
-import LottieView from 'lottie-react-native';
-import { TFormDataProps, TPais } from '../@types/types';
-import { AlertSucess } from '../Components/Alert';
-import { RadioButtonTime } from '../Components/RadioButton';
-import { RadioButtonEmpregado } from '../Components/RadioButton/RaidioButtonEmpregado';
-import Paises from '../Data/paises';
-import useApi from '../Hooks/useApi';
 
 import Sending from '../assets/img/Sending.json';
+
+import { TFormDataProps, TPais } from '../@types/types';
+
+import { AlertSucess } from '../Components/Alert';
+import { Input } from '../Components/Input';
+import { RadioButtonTime } from '../Components/RadioButton';
+import { RadioButtonEmpregado } from '../Components/RadioButton/RaidioButtonEmpregado';
+import { Select } from '../Components/Select';
+
+import { LanguageContext } from '../Contexts/LanguageProvider';
+import Paises from '../Data/paises';
+import useApi from '../Hooks/useApi';
 
 export function EnqueteScreen() {
 
@@ -31,7 +31,7 @@ export function EnqueteScreen() {
         }
     })
 
-    const { texts, language } = useContext(LanguageContext)
+    const { texts } = useContext(LanguageContext)
 
     const [paises, setPaises] = React.useState<TPais[]>([])
 
@@ -48,15 +48,15 @@ export function EnqueteScreen() {
     async function onSubmit(data: TFormDataProps) {
 
         setIsLoading(true)
-        const dta = await api.PostSurvey(data)
+        const status = await api.PostSurvey(data)
         setIsLoading(false)
 
-        if (dta == 201) {
+        if (status == 201) {
             reset()
             setShow(true)
             setTimeout(() => (setShow(false)), 1000 * 3) // 3 segundos
         } else {
-            return console.warn("Erro ao enviar formulario");
+            return console.warn(`Erro ao enviar formulario! Status: ${ status }`);
         }
 
     }
@@ -68,6 +68,7 @@ export function EnqueteScreen() {
                 style={styles.linearGradient}>
 
                 <AlertSucess setShow={setShow} show={show} />
+
                 {isLoading ?
 
                     <LottieView
@@ -84,6 +85,7 @@ export function EnqueteScreen() {
                         <ScrollView style={{ width: '100%' }}>
 
                             <View style={styles.contentPerguntas}>
+
                                 <Text style={styles.peguntas}>{texts.enquete.perguntas.p1} <Text style={styles.requered} >*</Text>  </Text>
                                 <Controller
                                     control={control}
@@ -171,7 +173,7 @@ export function EnqueteScreen() {
                                     style={styles.button}
                                     onPress={handleSubmit(onSubmit)}
                                 >
-                                    {language == 'english' ? <ButtonSVGEng /> : <ButtonSVG />}
+                                    {<texts.enquete.button />}
                                 </TouchableOpacity>
 
                             </View>
@@ -179,6 +181,7 @@ export function EnqueteScreen() {
                         </ScrollView>
                     </>
                 }
+
             </LinearGradient>
         </View>
     )

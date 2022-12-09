@@ -1,3 +1,5 @@
+import { SvgProps } from "react-native-svg"
+
 export type texts = {
     home: {
         header: string
@@ -18,7 +20,8 @@ export type texts = {
         mapText: {
             title: string,
             subTitle: string
-        }
+        },
+        button: React.FC<SvgProps>
     },
     posts: {
         header: string

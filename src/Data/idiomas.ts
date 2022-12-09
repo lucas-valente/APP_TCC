@@ -1,3 +1,6 @@
+import ButtonSVG from '../assets/img/buttonSurvey.svg';
+import ButtonSVGEng from '../assets/img/ButtonSVGEng.svg';
+
 export const languages = {
     'ptBr': 'portuguese',
     'enUs': 'english'
@@ -23,7 +26,8 @@ export const TextsPortuguese = {
         mapText: {
             title: 'Como Chegar !',
             subTitle: 'Clique no mapa para encontrar a sua rota'
-        }
+        },
+        button: ButtonSVG
     },
     posts: {
         header: 'Posts'
@@ -72,7 +76,8 @@ export const TextsEnglish = {
         mapText: {
             title: 'How to Get There !',
             subTitle: 'Click on the map to find your route'
-        }
+        },
+        button: ButtonSVGEng
     },
     posts: {
         header: 'Posts'

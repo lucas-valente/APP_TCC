@@ -6,14 +6,14 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 
 import BrasilIcon from '../assets/img/IconBrasil.png';
 import UsaIcon from '../assets/img/IconUsa.png';
-import Logo2 from '../assets/img/lg2.png';
+import Logo from '../assets/img/lg2.png';
 
 import { LanguageContext } from '../Contexts/LanguageProvider';
 import { languages } from '../Data/idiomas';
 
 export function ModalIdiomaScreen() {
 
-    const { language, setLanguage, toggleLanguage } = useContext(LanguageContext)
+    const { language, toggleLanguage } = useContext(LanguageContext)
 
     return (
         <View style={styles.container}>
@@ -25,7 +25,7 @@ export function ModalIdiomaScreen() {
 
                     <View style={styles.content}>
 
-                        <Image source={Logo2} />
+                        <Image source={Logo} />
 
                         <Text style={styles.textHeader}>Migrantes Curitiba</Text>
                         <Text style={styles.TextDesc}>Select your language</Text>
@@ -56,9 +56,11 @@ export function ModalIdiomaScreen() {
                             </TouchableOpacity>
 
                         </View>
+
                         <Text style={styles.language}>{language}</Text>
 
                     </View>
+
                 </ScrollView>
             </LinearGradient>
         </View >

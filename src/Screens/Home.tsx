@@ -1,7 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+
 import { CardPosts } from '../Components/CardPosts';
+
 export function HomeScreen() {
 
     return (

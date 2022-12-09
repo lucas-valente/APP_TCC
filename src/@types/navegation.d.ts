@@ -4,6 +4,7 @@ export declare global {
             HOME: undefined
             ENQUETE: undefined
             IDIOMA: undefined
+            AJUDA: undefined
         }
     }
 }

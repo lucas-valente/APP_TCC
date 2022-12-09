@@ -1,12 +1,12 @@
-import React, { createContext, Dispatch, SetStateAction, useState } from "react";
+import React, { createContext, useState } from "react";
+
 import { texts } from "../../@types/types";
 import { languages, TextsEnglish, TextsPortuguese } from "../../Data/idiomas";
 
-export type TpropsContext = {
+type TpropsContext = {
   language: string,
   texts: texts,
   toggleLanguage: void | any
-  setLanguage: Dispatch<SetStateAction<string>>
 }
 
 export const LanguageContext = createContext<TpropsContext>(
@@ -14,8 +14,7 @@ export const LanguageContext = createContext<TpropsContext>(
 
     language: "portuguese",
     texts: TextsPortuguese,
-    toggleLanguage: () => { },
-    setLanguage: (): Dispatch<SetStateAction<string>> | void => { }
+    toggleLanguage: () => { }
 
   }
 );
@@ -34,21 +33,19 @@ const LanguageContextProvider = ({ children }: props) => {
 
       case languages.ptBr:
         return setLanguage(languages.ptBr), setTexts(TextsPortuguese);
-        break;
 
       case languages.enUs:
         return setLanguage(languages.enUs), setTexts(TextsEnglish);
-        break;
 
       default:
         return setLanguage(languages.ptBr), setTexts(TextsPortuguese);
-        break;
+
     }
 
   };
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, setLanguage, texts }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage, texts }}>
       {children}
     </LanguageContext.Provider>
   );
